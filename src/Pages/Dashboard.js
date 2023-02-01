@@ -3,7 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { SidebarHeader } from "../Components/SidebarHeader";
 
-import { startNow, deployedTime, claimAirdrop, getUserDetails } from "../helper/getWeb3";
+import {
+  startNow,
+  deployedTime,
+  claimAirdrop,
+  getUserDetails,
+} from "../helper/getWeb3";
 import { sidebarJS, calculatePercentage } from "../helper/helperFunctions";
 import { setUserAddress, setUserDetails } from "../redux/reducer";
 import { CONTRACT_ADDRESS } from "../helper/config";
@@ -26,7 +31,7 @@ export const Dashboard = () => {
     totalAvailableWithdraw,
     totalTeamBusiness,
     stakingDetails,
-    isRewardClaimPending
+    isRewardClaimPending,
   } = useSelector((state) => state.data.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +39,7 @@ export const Dashboard = () => {
   const [copied, setCopied] = useState(false);
   const [busnessPercent, setBusinessPercent] = useState(0);
   const [refresh, setRefresh] = useState(false);
-  const [canWithdraw, setCanWithdraw] = useState(false)
+  const [canWithdraw, setCanWithdraw] = useState(false);
 
   const [d, setD] = useState(0);
   const [h, setH] = useState(0);
@@ -49,25 +54,24 @@ export const Dashboard = () => {
     });
   }
 
-  console.log(isRewardClaimPending,"isRewardClaimPendingdd");
+  console.log(isRewardClaimPending, "isRewardClaimPendingdd");
 
   setTimeout(() => {
     setCopied(false);
   }, 2000);
 
   useEffect(() => {
-   
     connectWallet();
     sidebarJS();
   }, []);
 
-  useEffect(()=>{
-    if(refresh){
+  useEffect(() => {
+    if (refresh) {
       getUserDetails(userAddress?.userAddress).then((uDetails) => {
         dispatch(setUserDetails({ userDetails: uDetails }));
-      })
+      });
     }
-  },[refresh,userAddress?.userAddress])
+  }, [refresh, userAddress?.userAddress]);
 
   useEffect(() => {
     const a = calculatePercentage(
@@ -80,69 +84,76 @@ export const Dashboard = () => {
   }, [totalAvailableWithdraw, userDetails?.userLastAmountInvested]);
 
   useEffect(() => {
-    let interval = setInterval(function () {
-      let currentTime = new Date();
-      let elapsedTime = currentTime - 1674896506000;
-      let days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
-      let hours = Math.floor(
-        (elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      let minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
-      // console.log(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
-      setD(days);
-      setH(hours);
-      setM(minutes);
-      setS(seconds);
-    }, 1000);
+    deployedTime().then((dt) => {
+      let interval = setInterval(function () {
+        let currentTime = new Date();
+        let elapsedTime = currentTime - Number(dt) * 1000;
+
+        let days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+        let hours = Math.floor(
+          (elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        let minutes = Math.floor(
+          (elapsedTime % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        let seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+        setD(days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s");
+      }, 1000);
+    });
   }, []);
 
   function countDown(endDate) {
-    let timer = setInterval(function() {
+    let timer = setInterval(function () {
       let now = new Date().getTime();
       let distance = endDate - now;
-      
+
       if (distance < 0) {
         clearInterval(timer);
         console.log("Countdown finished.");
-        setDD('You can Withdraw')
-        setCanWithdraw(true)
+        setDD("You can Withdraw");
+        setCanWithdraw(true);
       } else {
         let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
         let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        setDD(days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s ")
+        setDD(
+          days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s "
+        );
       }
     }, 1000);
   }
 
-  useEffect(()=>{
-
-    if(userAddress?.userAddress){
-     
-      console.log(isUserExist,"isUserExist 1");
-      if(isUserExist && stakingDetails?.timeofLastWithdrwal == 0){
+  useEffect(() => {
+    if (userAddress?.userAddress) {
+      console.log(isUserExist, "isUserExist 1");
+      if (isUserExist && stakingDetails?.timeofLastWithdrwal == 0) {
         // console.log((stakingDetails?.timeOfLastAmountstakede)*1000,"Last Withdrwa");
         // countDown((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000))
-        countDown((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(3.5*60*1000))
-      }else if(isUserExist && stakingDetails?.timeofLastWithdrwal !=0){
+        countDown(
+          Number(stakingDetails?.timeOfLastAmountstakede) * 1000 +
+            3.5 * 60 * 1000
+        );
+      } else if (isUserExist && stakingDetails?.timeofLastWithdrwal != 0) {
         // console.log((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000),"Last Deposit");
         // countDown((Number(stakingDetails?.timeofLastWithdrwal)*1000) +(7*24*60*60*1000))
-        countDown((Number(stakingDetails?.timeofLastWithdrwal)*1000) +(3.5*60*1000))
+        countDown(
+          Number(stakingDetails?.timeofLastWithdrwal) * 1000 + 3.5 * 60 * 1000
+        );
       }
-    }else{
-      setDD(0)
+    } else {
+      setDD(0);
     }
     // countDown(1675147148058)
-
-  },[userAddress?.userAddress, stakingDetails])
+  }, [userAddress?.userAddress, stakingDetails]);
 
   // console.log(stakingDetails?.timeOfLastAmountstakede,"stakingDetails");
 
   return (
     <>
-      <SidebarHeader canWithdraw={canWithdraw}/>
+      <SidebarHeader canWithdraw={canWithdraw} />
       {/* userAddress-card-start */}
       <section className="pb_50 mt-5 pt-5">
         <div className="container mt-3">
@@ -206,13 +217,9 @@ export const Dashboard = () => {
                         CONTRACT_ADDRESS.substr(35)
                       : 0}
                   </p>
-                  <p>
-                    {d && h && m && s ? `${d}d : ${h}h : ${m}m :   ${s}s` : 0}
-                  </p>
+                  <p>{d ? d : 0}</p>
                   <p>1.4 % daily</p>
-                  <p>
-                  {dd ? dd : 0}
-                  </p>
+                  <p>{dd ? dd : 0}</p>
                   <p>
                     {userAddress.userAddress
                       ? userAddress.userAddress.substr(0, 10) +
@@ -220,7 +227,7 @@ export const Dashboard = () => {
                         userAddress.userAddress.substr(35)
                       : "0x0000"}
                   </p>
-                  <p>{userBalance ? roundTo((userBalance / 1e18),4) : 0} BUSD</p>
+                  <p>{userBalance ? roundTo(userBalance / 1e18, 4) : 0} BUSD</p>
                   <p>
                     {userDetails?.userRefferdBy
                       ? userDetails?.userRefferdBy
@@ -309,9 +316,7 @@ export const Dashboard = () => {
                       {d && h && m && s ? `${d}d : ${h}h : ${m}m :   ${s}s` : 0}
                     </p>
                     <p className="card-value-size">1.4 % daily</p>
-                    <p className="card-value-size">
-                    {dd ? dd : 0}
-                    </p>
+                    <p className="card-value-size">{dd ? dd : 0}</p>
                     <p className="card-value-size">
                       {userAddress.userAddress
                         ? userAddress.userAddress.substr(0, 5) +
@@ -320,7 +325,7 @@ export const Dashboard = () => {
                         : "0x0000"}
                     </p>
                     <p className="card-value-size">
-                      {userBalance ? roundTo((userBalance / 1e18),4) : 0} BUSD
+                      {userBalance ? roundTo(userBalance / 1e18, 4) : 0} BUSD
                     </p>
                     <p className="card-value-size">
                       {userDetails?.userRefferdBy
@@ -497,9 +502,10 @@ export const Dashboard = () => {
                     <span className="amount-number">
                       <b>
                         {" "}
-                        {!isRewardClaimPending ? 0 :userDetails?.userLastAmountInvested
-                          && userDetails?.userLastAmountInvested / 1e18
-                          }
+                        {!isRewardClaimPending
+                          ? 0
+                          : userDetails?.userLastAmountInvested &&
+                            userDetails?.userLastAmountInvested / 1e18}
                       </b>
                     </span>{" "}
                     BUSD
@@ -690,12 +696,11 @@ export const Dashboard = () => {
                 </div>
                 <div className="text-center">
                   <button
-                    
                     className="grad_btn btn-block mx-4 "
                     style={{ padding: "10px 15px" }}
                     onClick={() => {
                       if (userAddress?.userAddress) {
-                        navigate("/Deposit")
+                        navigate("/Deposit");
                       } else {
                         toast("Connect Wallet to Deposit");
                       }
@@ -723,7 +728,12 @@ export const Dashboard = () => {
                     </div>
                     <div className="d-flex align-items-center">
                       <h3 className="mx-auto">
-                        <span className="amount-number">{totalAvailableWithdraw ? roundTo(totalAvailableWithdraw,4) :0}</span> BUSD
+                        <span className="amount-number">
+                          {totalAvailableWithdraw
+                            ? roundTo(totalAvailableWithdraw, 4)
+                            : 0}
+                        </span>{" "}
+                        BUSD
                       </h3>
                     </div>
                   </div>
@@ -734,12 +744,11 @@ export const Dashboard = () => {
                     style={{ padding: "10px 15px" }}
                     onClick={() => {
                       if (userAddress?.userAddress) {
-                        if(canWithdraw){
+                        if (canWithdraw) {
                           navigate("/widthdraw");
-                        }else{
+                        } else {
                           toast("Waith for the 7 days");
                         }
-                        
                       } else {
                         toast("Connect Wallet to Withdraw");
                       }
