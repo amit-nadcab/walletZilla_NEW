@@ -1,0 +1,104 @@
+.siginin-section {
+    /* background: url("../../assets/image/bitcoinjpg.jpg") no-repeat; */
+    min-height: 100vh;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    background-size: 100% 100%;
+  }
+  .signup-label {
+    text-align: left !important;
+  }
+  .signin-middle-container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .signin-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 100px;
+    width: 100px;
+  }
+  .outer-form-signin {
+    background: linear-gradient(180deg,rgb(30 120 255 / 15%) 41.15%,rgb(140 207 255 / 10%) 100%);
+    
+    margin: auto;
+    width: 50%;
+    border-radius: 20px;
+    border: 1px solid rgba(81, 142, 150, 0.568);
+  }
+  .inner-form-signin {
+    /* margin-left: 20px;
+      margin-right: 20px; */
+    padding: 10px;
+  }
+  .connect-wallet-btn {
+    cursor: pointer;
+    padding: 10px 35px 8px;
+    letter-spacing: 1px;
+    font-size: 15px;
+    font-weight: 400;
+    height: 45px;
+    font-family: "Open Sans", sans-serif;
+    border-radius: 3px;
+    text-transform: uppercase;
+    line-height: 0px;
+    border-radius: 32px;
+    background-color: #1f5cb8;
+    color: rgb(255, 255, 255);
+    border: none;
+    font-weight: 600;
+  }
+  .connect-wallet-btn:hover {
+    background-image: linear-gradient(to top, #0666ff 0%, #359af3 100%);
+  }
+  .inner-form-signin .join-here-btn {
+    background-image: linear-gradient(
+      to right,
+      #4facfe 0%,
+      #007bfe  100%
+    ) !important;
+  }
+  .inner-form-signin .form-control {
+    color: #ffffff;
+    background-color: #b8b5b913;
+    line-height: 34px;
+    border: none;
+    font-weight: 600;
+    border-radius: 1px;
+    transition: none;
+    border-bottom: 1px solid rgba(52, 111, 140, 0.56);
+    margin-top: 10px;
+  }
+  .inner-form-signin .form-control:focus {
+    color: #ffffff;
+    background-color: #e1d4d442;
+    font-weight: 600;
+    box-shadow: none !important;
+  }
+  .form-control:focus {
+    border-color: none;
+    box-shadow: none;
+  }
+  
+  @media only screen and (max-width: 978px) {
+    .outer-form-signin {
+      width: 100%;
+    }
+    .signin-middle-container {
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+    .level-inc-container {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
