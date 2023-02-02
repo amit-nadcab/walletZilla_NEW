@@ -9,7 +9,9 @@ const initialValue = {
   totalAvailableWithdraw: 0,
   totalTeamBusiness: 0,
   stakingDetails: {},
-  isRewardClaimPending: false
+  isLastInvestmentActive_: false,
+  isRewardClaimPending_: false,
+  businessPercent: 0
 };
 export const dataSlice = createSlice({
   name: "walletZilla",
@@ -42,8 +44,14 @@ export const dataSlice = createSlice({
     setStakingDetails: (state, action) => {
       state.value.stakingDetails = action.payload.stakingDetails;
     },
+    setIsLastInvestmentActive: (state, action) => {
+      state.value.isLastInvestmentActive_ = action.payload.isLastInvestmentActive_;
+    },
     setIsRewardClaimPending: (state, action) => {
-      state.value.isRewardClaimPending = action.payload.isRewardClaimPending;
+      state.value.isRewardClaimPending_ = action.payload.isRewardClaimPending_;
+    },
+    setBusinessPercent: (state, action) => {
+      state.value.businessPercent = action.payload.businessPercent;
     },
   },
 });
@@ -56,7 +64,9 @@ export const {
   setTotalAvaialbeWithdraw,
   setTotalTeamBusiness,
   setStakingDetails,
-  setIsRewardClaimPending
+  setIsLastInvestmentActive,
+  setIsRewardClaimPending,
+  setBusinessPercent
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

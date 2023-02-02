@@ -87,7 +87,7 @@ export const MyTeam = () => {
                   <th scope="col">Amount</th>
                   <th scope="col">User ID</th>
                   <th scope="col">User Address</th>
-                  <th scope="col">Withdraw Date </th>
+                  <th scope="col">Date</th>
                 </tr>
               </thead>
               <tbody>

@@ -15,7 +15,7 @@ const token_instance = new web3.eth.Contract(TOKEN_ABI, TOKEN_ADDRESS);
 
 export async function startNow() {
   web3.eth.getChainId().then((res) => {
-    console.log(res, "chain ID", typeof res);
+    // console.log(res, "chain ID", typeof res);
     if (res !== 97) {
       SwitchNetwork();
     }
@@ -152,7 +152,7 @@ export const getRoi = async (userAddress) => {
     const data = await contract_instance.methods
       .calculateWithdrawlAmount(userAddress)
       .call();
-    console.log(data, "ROI");
+    // console.log(data, "ROI");
     return data;
   } catch (error) {
     console.log(error, "calculateWithdrawlAmount Error");
@@ -186,9 +186,17 @@ export const getStakingDetails = async (userAddress) => {
     console.log(error, "UserStakingDetail Error");
   }
 };  
-export const isRewardPending = async(userAddress)=>{
+export const isLastInvestmentActive = async(userAddress)=>{
   try {
     const data = await contract_instance.methods.isLastInvestmentActive(userAddress).call()
+    return data
+  } catch (error) {
+    console.log(error,"isLastInvestmentActive Error");
+  }
+}
+export const isRewardClaimPending = async(userAddress)=>{
+  try {
+    const data = await contract_instance.methods.IsRewardClaimPending(userAddress).call()
     return data
   } catch (error) {
     console.log(error,"IsRewardClaimPending Error");

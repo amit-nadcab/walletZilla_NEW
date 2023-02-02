@@ -14,17 +14,20 @@ export const Widthdraw = () => {
     userDetails,
     dailyRoi,
     totalAvailableWithdraw,
-    stakingDetails,
   } = useSelector((state) => state.data.value);
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
 
-  console.log(stakingDetails, "dfnskdjfsdfjsfkjdsf");
 
   useEffect(() => {
-    if (refresh) navigate("/Dashboard");
     sidebarJS();
-  }, [stakingDetails]);
+  }, []);
+
+  useEffect(()=>{
+    if(refresh){
+      navigate("/Dashboard");
+    }
+  },[refresh])
   return (
     <>
       <SidebarHeader />
@@ -72,7 +75,7 @@ export const Widthdraw = () => {
                           <div className="envNS">
                             <span className="directReward">
                               {userDetails?.totalIncentiveEarned
-                                ? userDetails?.totalIncentiveEarned / 1e18
+                                ? roundTo((userDetails?.totalIncentiveEarned / 1e18),4)
                                 : 0}
                             </span>{" "}
                             <span className="amount-unit">BUSD</span>

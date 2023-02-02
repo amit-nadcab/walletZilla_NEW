@@ -18,7 +18,6 @@ import { AiOutlineCopy } from "react-icons/ai";
 import ReactSpeedometer from "react-d3-speedometer";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { roundTo } from "round-to";
-import Countdown from "react-countdown";
 import { toast } from "react-hot-toast";
 
 export const Dashboard = () => {
@@ -31,7 +30,9 @@ export const Dashboard = () => {
     totalAvailableWithdraw,
     totalTeamBusiness,
     stakingDetails,
-    isRewardClaimPending,
+    isLastInvestmentActive_,
+    isRewardClaimPending_,
+    businessPercent
   } = useSelector((state) => state.data.value);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export const Dashboard = () => {
     });
   }
 
-  console.log(isRewardClaimPending, "isRewardClaimPendingdd");
+  
 
   setTimeout(() => {
     setCopied(false);
@@ -75,18 +76,18 @@ export const Dashboard = () => {
 
   useEffect(() => {
     const a = calculatePercentage(
-      totalAvailableWithdraw,
+      businessPercent,
       userDetails?.userLastAmountInvested / 1e18
     );
     setBusinessPercent(a);
-    console.log(a);
-    console.log(a, "sum");
+    // console.log(a, "sum");
   }, [totalAvailableWithdraw, userDetails?.userLastAmountInvested]);
 
   useEffect(() => {
     deployedTime().then((dt) => {
       let interval = setInterval(function () {
         let currentTime = new Date();
+        // console.log(Number(dt) * 1000,"Time");
         let elapsedTime = currentTime - Number(dt) * 1000;
 
         let days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
@@ -97,6 +98,7 @@ export const Dashboard = () => {
           (elapsedTime % (1000 * 60 * 60)) / (1000 * 60)
         );
         let seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+        // console.log(days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s");
         setD(days + "d : " + hours + "h : " + minutes + "m : " + seconds + "s");
       }, 1000);
     });
@@ -128,19 +130,18 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (userAddress?.userAddress) {
-      console.log(isUserExist, "isUserExist 1");
+      // console.log(isUserExist, "isUserExist 1");
       if (isUserExist && stakingDetails?.timeofLastWithdrwal == 0) {
         // console.log((stakingDetails?.timeOfLastAmountstakede)*1000,"Last Withdrwa");
         // countDown((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000))
         countDown(
-          Number(stakingDetails?.timeOfLastAmountstakede) * 1000 +
-            3.5 * 60 * 1000
+          Number(stakingDetails?.timeOfLastAmountstakede) * 1000 + 21 * 60 * 1000
         );
       } else if (isUserExist && stakingDetails?.timeofLastWithdrwal != 0) {
         // console.log((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000),"Last Deposit");
         // countDown((Number(stakingDetails?.timeofLastWithdrwal)*1000) +(7*24*60*60*1000))
         countDown(
-          Number(stakingDetails?.timeofLastWithdrwal) * 1000 + 3.5 * 60 * 1000
+          Number(stakingDetails?.timeofLastWithdrwal) * 1000 + 21 * 60 * 1000
         );
       }
     } else {
@@ -313,7 +314,7 @@ export const Dashboard = () => {
                         : 0}
                     </p>
                     <p className="card-value-size">
-                      {d && h && m && s ? `${d}d : ${h}h : ${m}m :   ${s}s` : 0}
+                    <p>{d ? d : 0}</p>
                     </p>
                     <p className="card-value-size">1.4 % daily</p>
                     <p className="card-value-size">{dd ? dd : 0}</p>
@@ -502,7 +503,7 @@ export const Dashboard = () => {
                     <span className="amount-number">
                       <b>
                         {" "}
-                        {!isRewardClaimPending
+                        {!isLastInvestmentActive_
                           ? 0
                           : userDetails?.userLastAmountInvested &&
                             userDetails?.userLastAmountInvested / 1e18}
@@ -561,7 +562,7 @@ export const Dashboard = () => {
             </div>
             <div className="col-md-4 col-sm-6 col-6">
               <div className="Personal_Details_inner">
-                <h4> Total Referral income</h4>
+                <h4> Total Direct Referral income</h4>
                 <p>
                   {" "}
                   <span className="amount-number">
@@ -700,7 +701,16 @@ export const Dashboard = () => {
                     style={{ padding: "10px 15px" }}
                     onClick={() => {
                       if (userAddress?.userAddress) {
-                        navigate("/Deposit");
+                        if(isLastInvestmentActive_){
+                          toast("Your Staking is Active")
+                        }else{
+                          if(isRewardClaimPending_){
+                            toast("Withdraw Balance Reward First")
+                          }else{
+                            navigate("/Deposit");
+                          }
+                        }
+                        
                       } else {
                         toast("Connect Wallet to Deposit");
                       }

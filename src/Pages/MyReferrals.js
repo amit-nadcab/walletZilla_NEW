@@ -4,9 +4,10 @@ import { SidebarHeader } from "../Components/SidebarHeader";
 import { getMyReferral } from "../helper/apiFunctions";
 import { useSelector } from "react-redux";
 
+
 export const MyReferrals = () => {
 
-  const { userAddress } = useSelector((state) => state.data.value);
+  const { userAddress} = useSelector((state) => state.data.value);   
   const [tab, setTab] = useState([])
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export const MyReferrals = () => {
     getMyReferral(userAddress?.userAddress).then((res) => {
       setTab(res?.data)
     })
+   
   },[userAddress?.userAddress])
   return (
     <>
@@ -37,7 +39,7 @@ export const MyReferrals = () => {
                   <th scope="col">Amount</th>
                   <th scope="col">User ID</th>
                   <th scope="col">User Address</th>
-                  <th scope="col">Withdraw Date </th>
+                  <th scope="col">Date </th>
                 </tr>
               </thead>
               <tbody>
@@ -45,7 +47,9 @@ export const MyReferrals = () => {
                   tab && tab.length > 0 ? (
                     tab.map((e, i) => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
+                      
                       return (
+                       
                         <>
                         <tr key={i}>
                           {/* <th scope="row">1</th> */}

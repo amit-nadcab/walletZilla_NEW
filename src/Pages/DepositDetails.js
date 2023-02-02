@@ -3,6 +3,7 @@ import { sidebarJS } from "../helper/helperFunctions";
 import { SidebarHeader } from "../Components/SidebarHeader";
 import { getDepositDetisl } from "../helper/apiFunctions";
 import { useSelector } from "react-redux";
+// import {isLastInvestmentActive} from '../helper/getWeb3'
 export const DepositDetails = () => {
 
   const { userAddress } = useSelector((state) => state.data.value);
@@ -16,6 +17,10 @@ export const DepositDetails = () => {
     getDepositDetisl(userAddress?.userAddress).then((res) => {
       setTab(res?.data)
     })
+
+    
+
+    // const a =  isLastInvestmentActive(userAddress?.userAddress)
   },[userAddress?.userAddress])
   return (
     <>
@@ -43,6 +48,7 @@ export const DepositDetails = () => {
                   tab && tab.length > 0 ? (
                     tab.map((e, i) => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
+                      
                       return (
                         <>
                         <tr key={i}>

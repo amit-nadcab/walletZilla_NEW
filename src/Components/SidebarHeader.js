@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 import {
   startNow,
   getUserDetails,
@@ -8,7 +9,8 @@ import {
   getRoi,
   getTotalTeamBusiness,
   getStakingDetails,
-  isRewardPending
+  isLastInvestmentActive,
+  isRewardClaimPending
 } from "../helper/getWeb3";
 import {
   setUserAddress,
@@ -19,11 +21,15 @@ import {
   setTotalAvaialbeWithdraw,
   setTotalTeamBusiness,
   setStakingDetails,
-  setIsRewardClaimPending
+  setIsLastInvestmentActive,
+  setIsRewardClaimPending,
+  setBusinessPercent
 } from "../redux/reducer";
 
-export const SidebarHeader = ({canWithdraw}) => {
+export const SidebarHeader = ({ canWithdraw }) => {
+  const { isLastInvestmentActive_, isRewardClaimPending_ } = useSelector((state) => state.data.value);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   useEffect(() => {
     startNow().then((res) => {
@@ -37,39 +43,32 @@ export const SidebarHeader = ({canWithdraw}) => {
           dispatch(setIsUserExist({ isUserExist: true }));
         }
         getRoi(res?.userAddress).then((roi) => {
-          dispatch(setDailyRoi({ dailyRoi: roi }));
-          console.log(
-            uDetails?.amountEarnedByRef / 1e18 +
-              uDetails?.totalIncentiveEarned / 1e18 +
-              roi / 1e18
-          );
-          dispatch(
-            setTotalAvaialbeWithdraw({
-              totalAvailableWithdraw:
-                uDetails?.amountEarnedByRef / 1e18 +
-                uDetails?.totalIncentiveEarned / 1e18 +
-                roi / 1e18,
-            })
-          );
-          setDailyRoi(roi);
+          getStakingDetails(res?.userAddress).then((sd) => {
+            const obj = {
+              expTime: sd?.expTime,
+              isStakingActive: sd?.isStakingActive,
+              timeOfLastAmountstakede: sd?.timeOfLastAmountstakede,
+              timeofLastWithdrwal: sd?.timeofLastWithdrwal,
+              userLastTimeAmountTotalRewardClaimed:
+                sd?.userLastTimeAmountTotalRewardClaimed,
+            };
+            dispatch(setStakingDetails({ stakingDetails: obj }));
+            dispatch(setDailyRoi({ dailyRoi: roi }));
+            dispatch(setTotalAvaialbeWithdraw({ totalAvailableWithdraw: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + roi / 1e18, }));
+            dispatch(setBusinessPercent({ businessPercent: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + roi / 1e18 + sd?.userLastTimeAmountTotalRewardClaimed/1e18 }))
+            setDailyRoi(roi);
+          });
+
         });
       });
       getTotalTeamBusiness(res?.userAddress).then((ttb) => {
         dispatch(setTotalTeamBusiness({ totalTeamBusiness: ttb }));
       });
-      getStakingDetails(res?.userAddress).then((sd) => {
-        const obj = {
-          expTime: sd?.expTime,
-          isStakingActive: sd?.isStakingActive,
-          timeOfLastAmountstakede: sd?.timeOfLastAmountstakede,
-          timeofLastWithdrwal: sd?.timeofLastWithdrwal,
-          userLastTimeAmountTotalRewardClaimed:
-            sd?.userLastTimeAmountTotalRewardClaimed,
-        };
-        dispatch(setStakingDetails({ stakingDetails: obj }));
-      });
-      isRewardPending(res?.userAddress).then((isp)=>{
-        dispatch(setIsRewardClaimPending({isRewardClaimPending: isp}))
+      isLastInvestmentActive(res?.userAddress).then((isp) => {
+        dispatch(setIsLastInvestmentActive({ isLastInvestmentActive_: isp }))
+      })
+      isRewardClaimPending(res?.userAddress).then((cp) => {
+        dispatch(setIsRewardClaimPending({ isRewardClaimPending_: cp }))
       })
     });
   }, []);
@@ -108,7 +107,7 @@ export const SidebarHeader = ({canWithdraw}) => {
             <Link to="/DepositDetails">Deposit Details</Link>
           </li>
           <li>
-            <Link to={ "/WithdrawDetails"}>Withdraw Details</Link>
+            <Link to={"/WithdrawDetails"}>Withdraw Details</Link>
           </li>
           <li>
             <Link to="/AirdropDetails">Airdrop Details</Link>
@@ -119,15 +118,22 @@ export const SidebarHeader = ({canWithdraw}) => {
           <li>
             <Link to="/MyTeam">My Team</Link>
           </li>
-          {/* <li>
-            <a href="">Referral Income</a>
-          </li>
-         
           <li>
-            <a href="">Royalty Income</a>
-          </li> */}
+            <Link to="/MyTeam">Manager Income</Link>
+          </li>
+          <li>
+            <Link to="/MyTeam">Senior Manager Income</Link>
+          </li>
+          
+      
           <li className="menu-button">
-            <Link to="/Deposit">Deposit</Link>
+            <a href="" onClick={() => {
+              if (isRewardClaimPending_) {
+                toast("Withdraw Balance Reward First")
+              } else {
+                navigate("/Deposit");
+              }
+            }}>Deposit</a>
           </li>
           <li className="menu-button">
             <Link to="/widthdraw">Widthdraw</Link>
