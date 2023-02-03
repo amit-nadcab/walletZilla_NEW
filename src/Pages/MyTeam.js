@@ -99,8 +99,8 @@ export const MyTeam = () => {
                         <>
                           <tr key={i}>
                             <td>{i + 1}</td>
-                            <td>{e?.AmountInv / 1e18} BUSD</td>
-                            <td>{0}</td>
+                            <td>{e?.AmtInv / 1e18} BUSD</td>
+                            <td>{e?.userRefferdById}</td>
                             <td>
                               <a style={{ color: "white" }} href={`https://testnet.bscscan.com/address/${e?.userAddress}`} target="_blank" rel="noreferrer">{e?.userAddress
                                 }</a>

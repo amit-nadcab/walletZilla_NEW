@@ -36,7 +36,7 @@ export const MyReferrals = () => {
                 <tr>
                   {/* <th scope="col">Sr No.</th> */}
                   <th scope="col">Sr. No.</th>
-                  <th scope="col">Amount</th>
+                  <th scope="col">Amount Invested</th>
                   <th scope="col">User ID</th>
                   <th scope="col">User Address</th>
                   <th scope="col">Date </th>
@@ -58,10 +58,7 @@ export const MyReferrals = () => {
                           <td>{e?.userRefferdById}</td>
                           <td>
                             <a style={{color:"white"}} href={`https://testnet.bscscan.com/address/${e?.userAddress}`} target="_blank" rel="noreferrer">{e?.userAddress
-                            ? e?.userAddress.substr(0, 10) +
-                            "......." +
-                            e?.userAddress.substr(10)
-                            : 0}</a>
+                            }</a>
                             </td>
                           <td>{test.toLocaleDateString()}</td>
                         </tr>

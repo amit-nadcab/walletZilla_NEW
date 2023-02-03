@@ -51,7 +51,7 @@ export const Widthdraw = () => {
                     <div className="IndCon">
                       <div className="envDK">
                         <div className="envNz flexC fl-bet">
-                          <div className="envNH">Referal Income</div>
+                          <div className="envNH">Direct Referal Income</div>
                           <div className="envNS">
                             <span className="unfreezed">
                               {userDetails?.amountEarnedByRef

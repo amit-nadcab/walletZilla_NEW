@@ -585,7 +585,7 @@ export const Dashboard = () => {
                     {" "}
                     <b>
                       {userDetails?.totalIncentiveEarned
-                        ? userDetails?.totalIncentiveEarned / 1e18
+                        ? roundTo((userDetails?.totalIncentiveEarned / 1e18),4)
                         : 0}
                     </b>{" "}
                   </span>{" "}
