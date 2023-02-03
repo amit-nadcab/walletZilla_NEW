@@ -31,11 +31,14 @@ export const Footer = () => {
                     className="socilMedia-icons"
                     size={20}
                   />
-                  <FaTelegram
-                    color="white"
-                    className="socilMedia-icons"
-                    size={20}
-                  />
+                  <a href="https://t.me/+0l6i6Bp1nUdiYjVl" target="_blank">
+                    <FaTelegram
+                      color="white"
+                      className="socilMedia-icons"
+                      size={20}
+                    />
+                  </a>
+
                   <AiFillYoutube
                     color="white"
                     className="socilMedia-icons"
