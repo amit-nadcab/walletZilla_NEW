@@ -19,6 +19,7 @@ import ReactSpeedometer from "react-d3-speedometer";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { roundTo } from "round-to";
 import { toast } from "react-hot-toast";
+import {getTotalTeamBusiness} from '../helper/apiFunctions'
 
 export const Dashboard = () => {
   const {
@@ -41,11 +42,10 @@ export const Dashboard = () => {
   const [busnessPercent, setBusinessPercent] = useState(0);
   const [refresh, setRefresh] = useState(false);
   const [canWithdraw, setCanWithdraw] = useState(false);
+  const [teamBusiness, setTeamBusiness] = useState(0)
 
   const [d, setD] = useState(0);
-  const [h, setH] = useState(0);
-  const [m, setM] = useState(0);
-  const [s, setS] = useState(0);
+  
 
   const [dd, setDD] = useState(0);
 
@@ -65,6 +65,13 @@ export const Dashboard = () => {
     connectWallet();
     sidebarJS();
   }, []);
+
+
+  useEffect(()=>{
+    getTotalTeamBusiness(userAddress?.userAddress).then((res)=>{
+      setTeamBusiness(res?.data[0]?.teamBusiness)
+    })
+  },[userAddress?.userAddress])
 
   useEffect(() => {
     if (refresh) {
@@ -553,7 +560,7 @@ export const Dashboard = () => {
                   <span className="amount-number">
                     {" "}
                     <b>
-                      {totalTeamBusiness ? totalTeamBusiness / 1e18 : 0}
+                      {teamBusiness ? teamBusiness  : 0}
                     </b>{" "}
                   </span>{" "}
                   BUSD

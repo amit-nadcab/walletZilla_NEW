@@ -46,3 +46,21 @@ export const getMyTeam = async(userAddress)=>{
         console.log(error,"getDepositDetisl Error");
     }
 }
+
+export const getTopDepositorIncome = async(userAddress)=>{
+    try {
+        const data = await axios.post(`${BASE_URL}/getDailyDepositor`,{userAddress: userAddress})
+        return data.data
+    } catch (error) {
+        console.log(error, "getDailyDepositor");
+    }
+}
+
+export const getTotalTeamBusiness = async(userAddress)=>{
+    try {
+        const data = await axios.post(`${BASE_URL}/getTeamBusiness`,{userAddress: userAddress})
+        return data.data
+    } catch (error) {
+        console.log(error);
+    }
+}

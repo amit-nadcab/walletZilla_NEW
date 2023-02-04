@@ -14,6 +14,7 @@ import { WithdrawDetails } from "./Pages/withdrawDetails";
 import {AirdropDetails} from './Pages/AirdropDetails'
 import { MyReferrals } from "./Pages/MyReferrals";
 import { MyTeam } from "./Pages/MyTeam";
+import {DailyTopDepositor} from './Pages/DailyTopDepositor'
 
 function App() {
   const { userAddress } = useSelector((state) => state.data.value);
@@ -34,6 +35,7 @@ function App() {
           <Route path="/AirdropDetails" element={<AirdropDetails />} />
           <Route path="/MyReferrals" element={<MyReferrals />} />
           <Route path="/MyTeam" element={<MyTeam />} />
+          <Route path="/DailyTopDepositorIncome" element={<DailyTopDepositor />} />
         </Routes>
         <Toaster
           position="top-center mt-5"

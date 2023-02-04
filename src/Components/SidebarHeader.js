@@ -119,6 +119,9 @@ export const SidebarHeader = ({ canWithdraw }) => {
             <Link to="/MyTeam">My Team</Link>
           </li>
           <li>
+            <Link to="/DailyTopDepositorIncome">Daily Top Depositor</Link>
+          </li>
+          <li>
             <Link to="/MyTeam">Manager Income</Link>
           </li>
           <li>
