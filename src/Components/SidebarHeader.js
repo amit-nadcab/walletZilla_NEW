@@ -7,10 +7,10 @@ import {
   getUserDetails,
   getUserBalance,
   getRoi,
-  getTotalTeamBusiness,
   getStakingDetails,
   isLastInvestmentActive,
-  isRewardClaimPending
+  isRewardClaimPending,
+  getManagerIncome
 } from "../helper/getWeb3";
 import {
   setUserAddress,
@@ -19,11 +19,11 @@ import {
   setUserDetails,
   setDailyRoi,
   setTotalAvaialbeWithdraw,
-  setTotalTeamBusiness,
   setStakingDetails,
   setIsLastInvestmentActive,
   setIsRewardClaimPending,
-  setBusinessPercent
+  setBusinessPercent,
+  setRoyalityIncome
 } from "../redux/reducer";
 
 export const SidebarHeader = ({ canWithdraw }) => {
@@ -52,17 +52,22 @@ export const SidebarHeader = ({ canWithdraw }) => {
               userLastTimeAmountTotalRewardClaimed:
                 sd?.userLastTimeAmountTotalRewardClaimed,
             };
+            getManagerIncome(res?.userAddress).then((managerIncome)=>{
+              dispatch(setRoyalityIncome({royalityIncome: managerIncome}))
+            
             dispatch(setStakingDetails({ stakingDetails: obj }));
             dispatch(setDailyRoi({ dailyRoi: roi }));
-            dispatch(setTotalAvaialbeWithdraw({ totalAvailableWithdraw: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + roi / 1e18, }));
-            dispatch(setBusinessPercent({ businessPercent: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + roi / 1e18 + sd?.userLastTimeAmountTotalRewardClaimed/1e18 }))
+            console.log(((managerIncome?.topDepositor)),"1");
+            console.log(((managerIncome?.seniorManagerIncome)/1e18),"2");
+            console.log(((managerIncome?.managerIncome)/1e18),"3");
+            dispatch(setTotalAvaialbeWithdraw({ totalAvailableWithdraw: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + (roi / 1e18) +((managerIncome?.topDepositor)/1e18) + ((managerIncome?.seniorManagerIncome)/1e18) + ((managerIncome?.managerIncome)/1e18)}));
+            dispatch(setBusinessPercent({ businessPercent: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + roi / 1e18 + sd?.userLastTimeAmountTotalRewardClaimed/1e18 +
+            ((managerIncome?.topDepositor)/1e18) + ((managerIncome?.seniorManagerIncome)/1e18) + ((managerIncome?.managerIncome)/1e18)}))
             setDailyRoi(roi);
           });
+        })
 
         });
-      });
-      getTotalTeamBusiness(res?.userAddress).then((ttb) => {
-        dispatch(setTotalTeamBusiness({ totalTeamBusiness: ttb }));
       });
       isLastInvestmentActive(res?.userAddress).then((isp) => {
         dispatch(setIsLastInvestmentActive({ isLastInvestmentActive_: isp }))

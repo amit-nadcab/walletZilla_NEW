@@ -11,7 +11,8 @@ const initialValue = {
   stakingDetails: {},
   isLastInvestmentActive_: false,
   isRewardClaimPending_: false,
-  businessPercent: 0
+  businessPercent: 0,
+  royalityIncome: {}
 };
 export const dataSlice = createSlice({
   name: "walletZilla",
@@ -53,6 +54,9 @@ export const dataSlice = createSlice({
     setBusinessPercent: (state, action) => {
       state.value.businessPercent = action.payload.businessPercent;
     },
+    setRoyalityIncome: (state, action) => {
+      state.value.royalityIncome = action.payload.royalityIncome;
+    },
   },
 });
 export const {
@@ -66,7 +70,8 @@ export const {
   setStakingDetails,
   setIsLastInvestmentActive,
   setIsRewardClaimPending,
-  setBusinessPercent
+  setBusinessPercent,
+  setRoyalityIncome
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

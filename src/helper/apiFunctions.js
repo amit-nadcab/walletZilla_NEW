@@ -64,3 +64,13 @@ export const getTotalTeamBusiness = async(userAddress)=>{
         console.log(error);
     }
 }
+
+export const getManagerIncome = async(userAddress)=>{
+    try {
+        const data = await axios.post(`${BASE_URL}/getManagerIncome`,{userAddress: userAddress})
+        return data.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+

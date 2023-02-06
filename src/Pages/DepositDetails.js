@@ -39,7 +39,7 @@ export const DepositDetails = () => {
                   <th scope="col">Sr. No.</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Txn Hash</th>
-                  <th scope="col">Status</th>
+                  {/* <th scope="col">Status</th> */}
                   <th scope="col">Deposit Date </th>
                 </tr>
               </thead>
@@ -61,7 +61,7 @@ export const DepositDetails = () => {
                             e?.transaction_id.substr(55)
                             : 0}</a>
                             </td>
-                            <td>{'Active'}</td>
+                            {/* <td>{'Active'}</td> */}
                           <td>{test.toLocaleDateString()}</td>
                         </tr>
                         </>

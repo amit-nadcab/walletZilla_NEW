@@ -166,14 +166,18 @@ export const deployedTime = async () => {
     console.log(error, "deployedTime Error");
   }
 };
-export const getTotalTeamBusiness = async (userAddress) => {
+export const getManagerIncome = async (userAddress) => {
   try {
-    const data = await contract_instance.methods
-      .totalTeamBusiness(userAddress)
-      .call();
-    return data;
+    const data = await contract_instance.methods.UserRoyalityDetail(userAddress).call();
+    console.log( data?.dailyTopFiveIncome,"data?.dailyTopFiveIncome");
+    const obj = {
+      topDepositor: data?.dailyTopFiveIncome,
+      seniorManagerIncome: data?.userSeniorManagerIncome,
+      managerIncome: data?.usermanagerIncome
+    }
+    return obj;
   } catch (error) {
-    console.log(error, "totalTeamBusiness Error");
+    console.log(error, "UserRoyalityDetail Error");
   }
 };
 export const getStakingDetails = async (userAddress) => {
@@ -305,3 +309,4 @@ export async function buy(userAddress, amount, ref, setRefresh) {
     console.log(error);
   }
 }
+

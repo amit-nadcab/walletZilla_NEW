@@ -7,6 +7,7 @@ import { SidebarHeader } from "../Components/SidebarHeader";
 import { Footer } from "../Components/Footer";
 import { roundTo } from "round-to";
 import { toast } from "react-hot-toast";
+import {getManagerIncome} from '../helper/apiFunctions'
 
 export const Widthdraw = () => {
   const {
@@ -14,6 +15,7 @@ export const Widthdraw = () => {
     userDetails,
     dailyRoi,
     totalAvailableWithdraw,
+    royalityIncome
   } = useSelector((state) => state.data.value);
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
@@ -28,6 +30,10 @@ export const Widthdraw = () => {
       navigate("/Dashboard");
     }
   },[refresh])
+
+  useEffect(()=>{
+   
+  },[userAddress?.userAddress])
   return (
     <>
       <SidebarHeader />
@@ -93,21 +99,21 @@ export const Widthdraw = () => {
                         <div className="envNz flexC fl-bet">
                           <div className="envNH">Manager Income</div>
                           <div className="envNS">
-                            <span className="level4Reward">0.00</span>{" "}
+                            <span className="level4Reward">{royalityIncome?.managerIncome ? roundTo((royalityIncome?.managerIncome/1e18),4) : 0}</span>{" "}
                             <span className="amount-unit">BUSD</span>
                           </div>
                         </div>
                         <div className="envNz flexC fl-bet">
                           <div className="envNH">Senior Manager Income</div>
                           <div className="envNS">
-                            <span className="level5Reward">0.00</span>{" "}
+                            <span className="level5Reward">{royalityIncome?.seniorManagerIncome ? roundTo((royalityIncome?.seniorManagerIncome/1e18),4) : 0}</span>{" "}
                             <span className="amount-unit">BUSD</span>
                           </div>
                         </div>
                         <div className="envNz flexC fl-bet">
                           <div className="envNH">Lucky Pool Reward</div>
                           <div className="envNS">
-                            <span className="luckReward">0.00</span>{" "}
+                            <span className="luckReward">{royalityIncome?.topDepositor ? roundTo((royalityIncome?.topDepositor/1e18),4) : 0}</span>{" "}
                             <span className="amount-unit">BUSD</span>
                           </div>
                         </div>
