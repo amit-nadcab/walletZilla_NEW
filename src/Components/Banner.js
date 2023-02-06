@@ -4,8 +4,19 @@ import Typewriter from "typewriter-effect";
 import Lottie from "lottie-react";
 import walletZilla from "./main.json";
 import { Link } from "react-router-dom";
+import { startNow } from "../helper/getWeb3";
+import { setUserAddress } from "../redux/reducer";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Banner = () => {
+  const {userAddress} = useSelector((state) => state.data.value);
+  const dispatch = useDispatch()
+
+  function connectWallet() {
+    startNow().then((res) => {
+      dispatch(setUserAddress({ userAddress: res }));
+    });
+  }
   return (
     <>
       <div className="clearfix" style={{ clear: "both" }}></div>
@@ -56,7 +67,16 @@ export const Banner = () => {
                       </div>
 
                       <div className="hero-button">
-                        <Link to="/Dashboard">Join Us</Link>
+                  
+                        {
+                          userAddress?.userAddress ? <Link to="/Dashboard">Dashboard</Link> :
+                           <a className="text-white" style={{cursor: "pointer"}} onClick={()=>{
+                            connectWallet()
+                           }}>
+                            Connect Wallet
+                          </a>
+                        }
+                        
                         <a href="..\..\../Walletzilla.pdf" target="_blank">
                           Download Plan
                         </a>
@@ -71,21 +91,6 @@ export const Banner = () => {
                         alt=""
                       /> */}
                       <Lottie animationData={walletZilla} autoplay={true} />;
-                      {/* <div className="hero-main-thumb">
-                    <img src="assets/images/slider/main.png" alt='logo' />
-                </div>
-                <div className="hero-main-thumb" >
-                    <img src="assets/images/3dgifmaker44460.gif" alt="logo" width="400" className="gifRespnse" />
-                </div>
-                <div className="hero-thumb-inner1 bounce-animate4">
-                    <img src="assets/images/slider/img1.png" alt="" />
-                </div>
-                <div className="hero-thumb-inner2 bounce-animate">
-                    <img src="assets/images/slider/img2.png" alt="" />
-                </div>
-                <div className="hero-thumb-inner3 bounce-animate3">
-                    <img src="assets/images/slider/img3.png" alt="" />
-                </div> */}
                     </div>
                   </div>
                 </div>

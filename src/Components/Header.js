@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { startNow } from "../helper/getWeb3";
+import { setUserAddress } from "../redux/reducer";
 export const Header = () => {
+
+  const {userAddress} = useSelector((state) => state.data.value);
+  const dispatch = useDispatch()
+
+  function connectWallet() {
+    startNow().then((res) => {
+      dispatch(setUserAddress({ userAddress: res }));
+    });
+  }
+
+
+
   return (
     <>
       <nav className="navbar navbar-expand-lg header-fixed">
@@ -29,14 +43,23 @@ export const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item header-buttons">
-                <Link
+              <li className="nav-item header-buttons" style={{cursor: "pointer"}}>
+                {
+                  userAddress?.userAddress ? <Link to="/Dashboard"
+                  className="nav-link active text-white text-center"
+                  aria-current="page">
+                    Dashboard
+                </Link> : <span
                   className="nav-link active text-white text-center"
                   aria-current="page"
-                  to="/Dashboard"
+                onClick={()=>{
+                  connectWallet()
+                }}
                 >
-                  Signin
-                </Link>
+                  Connect Wallet
+                </span>
+                }
+                
               </li>
               <li className="nav-item header-buttons">
                 <a
