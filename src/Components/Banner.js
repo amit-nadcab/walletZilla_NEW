@@ -76,7 +76,6 @@ export const Banner = () => {
                             Connect Wallet
                           </a>
                         }
-                        
                         <a href="..\..\../Walletzilla.pdf" target="_blank">
                           Download Plan
                         </a>
