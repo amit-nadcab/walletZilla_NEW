@@ -3,14 +3,15 @@ import "../boxPrticles.css";
 import Typewriter from "typewriter-effect";
 import Lottie from "lottie-react";
 import walletZilla from "./main.json";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { startNow } from "../helper/getWeb3";
 import { setUserAddress } from "../redux/reducer";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Banner = () => {
-  const {userAddress} = useSelector((state) => state.data.value);
-  const dispatch = useDispatch()
+  const { userAddress } = useSelector((state) => state.data.value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function connectWallet() {
     startNow().then((res) => {
@@ -67,15 +68,24 @@ export const Banner = () => {
                       </div>
 
                       <div className="hero-button">
-                  
-                        {
-                          userAddress?.userAddress ? <Link to="/Dashboard">Dashboard</Link> :
-                           <a className="text-white" style={{cursor: "pointer"}} onClick={()=>{
-                            connectWallet()
-                           }}>
+                        {userAddress?.userAddress ? (
+                          <Link to="/Dashboard">Dashboard</Link>
+                        ) : (
+                          <a
+                            className="text-white"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              startNow().then((res) => {
+                                dispatch(setUserAddress({ userAddress: res }));
+                                if (res?.userAddress) {
+                                  navigate("/Dashboard");
+                                }
+                              });
+                            }}
+                          >
                             Connect Wallet
                           </a>
-                        }
+                        )}
                         <a href="..\..\../Walletzilla.pdf" target="_blank">
                           Download Plan
                         </a>

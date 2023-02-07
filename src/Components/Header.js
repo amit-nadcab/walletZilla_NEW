@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { startNow } from "../helper/getWeb3";
 import { setUserAddress } from "../redux/reducer";
 export const Header = () => {
-
-  const {userAddress} = useSelector((state) => state.data.value);
-  const dispatch = useDispatch()
-
-  function connectWallet() {
-    startNow().then((res) => {
-      dispatch(setUserAddress({ userAddress: res }));
-    });
-  }
-
-
+  const { userAddress } = useSelector((state) => state.data.value);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,23 +35,34 @@ export const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li className="nav-item header-buttons" style={{cursor: "pointer"}}>
-                {
-                  userAddress?.userAddress ? <Link to="/Dashboard"
-                  className="nav-link active text-white text-center"
-                  aria-current="page">
+              <li
+                className="nav-item header-buttons"
+                style={{ cursor: "pointer" }}
+              >
+                {/* {userAddress?.userAddress ? (
+                  <Link
+                    to="/Dashboard"
+                    className="nav-link active text-white text-center"
+                    aria-current="page"
+                  >
                     Dashboard
-                </Link> : <span
+                  </Link>
+                ) : ( */}
+                <span
                   className="nav-link active text-white text-center"
                   aria-current="page"
-                onClick={()=>{
-                  connectWallet()
-                }}
+                  onClick={() => {
+                    startNow().then((res) => {
+                      dispatch(setUserAddress({ userAddress: res }));
+                      if (res?.userAddress) {
+                        navigate("/Dashboard");
+                      }
+                    });
+                  }}
                 >
                   Connect Wallet
                 </span>
-                }
-                
+                {/* )} */}
               </li>
               <li className="nav-item header-buttons">
                 <a

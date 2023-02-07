@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
-import {BsTelegram} from 'react-icons/bs'
+import { BsTelegram } from "react-icons/bs";
 
 import { Home } from "./Pages/Home";
 import { Auth } from "./Pages/Auth";
@@ -25,11 +25,32 @@ function App() {
   return (
     <>
       <BrowserRouter>
-     <a href="https://t.me/wallet_zilla" target="_blank" style={{position:"fixed",bottom:"30px",right:"30px",minWidth:"60px",minHeight:"60px", zIndex: 2}} className="_help" >
-     <BsTelegram color="#1296C9" style={{width:"60px",height:"60px", position:"fixed",bottom:"30px",right:"30px"}} className="_help"/>
-     {/* <img src= "/assets/images/myImage/teligram_help.webp" alt="telegram" style={{width:"60px",height:"60px", position:"fixed",bottom:"30px",right:"30px"}}/> */}
-     </a>
-      
+        <a
+          href="https://t.me/wallet_zilla"
+          target="_blank"
+          style={{
+            position: "fixed",
+            bottom: "30px",
+            right: "30px",
+            minWidth: "60px",
+            minHeight: "60px",
+            zIndex: 2,
+          }}
+          className="_help"
+        >
+          <BsTelegram
+            color="#1296C9"
+            style={{
+              width: "60px",
+              height: "60px",
+              position: "fixed",
+              bottom: "30px",
+              right: "30px",
+            }}
+            className="_help"
+          />
+        </a>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
