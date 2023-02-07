@@ -13,7 +13,7 @@ export const ManagerIncome = () => {
   }, []);
 
   useEffect(() => {
-    getManagerIncome("0xBfc52D9dB62b90B5216096CeCB849b4D416DfA0B").then(
+    getManagerIncome(userAddress?.userAddress).then(
       (res) => {
         setTab(res?.data);
       }

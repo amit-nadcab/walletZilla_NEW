@@ -19,7 +19,7 @@ import ReactSpeedometer from "react-d3-speedometer";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { roundTo } from "round-to";
 import { toast } from "react-hot-toast";
-import { getTotalTeamBusiness } from '../helper/apiFunctions'
+import { getTotalTeamBusiness, getManagerIncome } from '../helper/apiFunctions'
 
 export const Dashboard = () => {
   const {
@@ -44,7 +44,14 @@ export const Dashboard = () => {
   const [refresh, setRefresh] = useState(false);
   const [canWithdraw, setCanWithdraw] = useState(false);
   const [teamBusiness, setTeamBusiness] = useState(0)
-
+  const [tab, setTab] = useState([]);
+  useEffect(() => {
+    getManagerIncome("0xBfc52D9dB62b90B5216096CeCB849b4D416DfA0B").then(
+      (res) => {
+        setTab(res?.data);
+      }
+    );
+  }, [userAddress?.userAddress]);
 
   const [d, setD] = useState(0);
 
@@ -800,18 +807,22 @@ export const Dashboard = () => {
             <div className="row cus_row">
               <div className="col-md-6 col-12">
                 <div className="Personal_Details_inner Personal_bg">
-                  <h4 className="text-start">Daily Top Depositor</h4>
-                  <h5>10:10:10</h5> <h5>Total fund for top Depositor</h5>
+                <h4 className="text-center">Top Depositor Income</h4>
+                <p className="amount-number">
+                  <b> {royalityIncome?.topDepositor ? roundTo((royalityIncome?.topDepositor/1e18),4) : 0}</b>
+                   
+                  </p>
                 </div>
               </div>
               <div className="col-md-6 col-12">
                 <div className="Personal_Details_inner Personal_bg">
                   <h4 className="text-center">Total Widthdraw</h4>
-                  <h5>
+                  <p className="amount-number">
+                    <b>
                     {userDetails?.totalWithdraw
                       ? userDetails?.totalWithdraw / 1e18
-                      : 0}
-                  </h5>
+                      : 0}</b>
+                  </p>
                 </div>
               </div>
             </div>
@@ -821,34 +832,58 @@ export const Dashboard = () => {
         {/* Dashboard Start*/}
         <section className="pb_50">
           <div className="container">
-            {/* <div className=" text-center">
+            <div className=" text-center">
             <h2>
-              <span className="busd-stake-gradiant">Dashboard</span>
+              <span className="busd-stake-gradiant">Top Depositors</span>
             </h2>
-          </div> */}
-            {/* <div className="row cus_row">
-            <div className="col-md-4 col-sm-4 col-6">
-              <div className="Personal_Details_inner Personal_bg">
-                <h4>User Id</h4>
-                <h5>222</h5>
+          </div>
+             <div className="row cus_row">
+            <div className=" col-12">
+              <div className="Personal_Details_inner_">
+                <div className="table-responsive">
+            <table className="table mt-3 rs-table">
+              <thead className="thead-light">
+                <tr>
+                  {/* <th scope="col">Sr No.</th> */}
+                  <th scope="col">Sr. No.</th>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Income</th>
+                  <th scope="col">Transaction ID</th>
+                  <th scope="col">Date </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tab && tab.length > 0 ? (
+                  tab.map((e, i) => {
+                    const test = new Date(Number(e.block_timestamp) * 1000);
+
+                    return (
+                      <>
+                        <tr key={i}>
+                          {/* <th scope="row">1</th> */}
+                          <td>{i + 1}</td>
+                          <td>{e?.amount / 1e18} BUSD</td>
+                          <td>
+                              {" "}
+                              {e?.transaction_id.substr(0, 10) +
+                                "......." +
+                                e?.transaction_id.substr(55)}
+                           
+                          </td>
+                          <td>{test.toLocaleDateString()}</td>
+                        </tr>
+                      </>
+                    );
+                  })
+                ) : (
+                  <div className="text-white text-center">No Data Found</div>
+                )}
+              </tbody>
+            </table>
+          </div>
               </div>
             </div>
-            <div className="col-md-4 col-sm-4 col-6">
-              <div className="Personal_Details_inner">
-                <h4> Direct Sponsor </h4>
-                <h5>123</h5>
-              </div>
-            </div>
-            <div className="col-md-4 col-sm-4 col-12">
-              <div className="Personal_Details_inner">
-                <h4>Referred By</h4>
-                <h5>
-                  0x00000000000000
-                  {refferer.substr(0, 5)}......{refferer.substr(-8)}
-                </h5>
-              </div>
-            </div>
-          </div> */}
+          </div> 
             {/* second row */}
             {/* <div className="row cus_row">
             <div className="col-md-4 col-sm-4 col-6">

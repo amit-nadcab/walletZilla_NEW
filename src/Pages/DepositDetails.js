@@ -51,7 +51,7 @@ export const DepositDetails = () => {
                       
                       return (
                         <>
-                        <tr key={i}>
+                        <tr key={i} className="tab-back">
                           <td>{i + 1}</td>
                           <td>{e?.AmountInv / 1e18} BUSD</td>
                           <td>

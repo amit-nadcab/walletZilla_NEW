@@ -45,7 +45,7 @@ export const WithdrawDetails = () => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
                       return (
                         <>
-                        <tr key={i}>
+                        <tr key={i} className="tab-back">
                           <td>{i + 1}</td>
                           <td>{e?.rewardClaimed / 1e18} BUSD</td>
                           <td>

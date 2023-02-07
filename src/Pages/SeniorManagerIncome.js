@@ -44,7 +44,7 @@ export const SeniorManagerIncome = () => {
 
                     return (
                       <>
-                        <tr key={i}>
+                        <tr key={i} className="tab-back">
                           {/* <th scope="row">1</th> */}
                           <td>{i + 1}</td>
                           <td>{e?.amount / 1e18} BUSD</td>

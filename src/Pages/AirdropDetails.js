@@ -49,7 +49,7 @@ export const AirdropDetails = () => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
                       return (
                         <>
-                        <tr key={i}>
+                        <tr key={i} className="tab-back">
                           {/* <th scope="row">1</th> */}
                           <td>{i + 1}</td>
                           <td>{ roundTo((e?.amount / 1e18),4)} WZT</td>

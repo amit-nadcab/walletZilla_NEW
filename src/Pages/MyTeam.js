@@ -97,7 +97,7 @@ export const MyTeam = () => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
                       return (
                         <>
-                          <tr key={i}>
+                          <tr key={i} className="tab-back">
                             <td>{i + 1}</td>
                             <td>{e?.AmtInv / 1e18} BUSD</td>
                             <td>{e?.userRefferdById}</td>

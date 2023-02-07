@@ -43,12 +43,12 @@ export const DailyTopDepositor = () => {
                 {
                   tab && tab.length > 0 ? (
                     tab.map((e, i) => {
-                      const test = new Date(Number(e.date) * 1000);
+                      const test = new Date(Number(e.block_timestamp) * 1000);
                       return (
                         <>
                         <tr key={i}>
                           <td>{i + 1}</td>
-                          <td>{e?.income / 1e18} BUSD</td>
+                          <td>{e?.amount / 1e18} BUSD</td>
                           <td>{test.toLocaleDateString()}</td>
                         </tr>
                         </>

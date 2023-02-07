@@ -51,7 +51,7 @@ export const MyReferrals = () => {
                       return (
                        
                         <>
-                        <tr key={i}>
+                        <tr key={i} className="tab-back">
                           {/* <th scope="row">1</th> */}
                           <td>{i + 1}</td>
                           <td>{e?.AmountInv / 1e18} BUSD</td>

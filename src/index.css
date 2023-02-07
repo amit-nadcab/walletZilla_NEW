@@ -351,6 +351,40 @@ background: -webkit-linear-gradient(90deg, rgba(105,8,104,1) 13%, rgba(30,16,30,
 background: linear-gradient(90deg, rgba(105,8,104,1) 13%, rgba(30,16,30,1) 60%, rgba(49,83,121,1) 99%); */
 }
 
+._help{
+  position: relative;
+  animation:transform 1s infinite alternate-reverse;
+ 
+}
+
+@keyframes transform {
+from{
+    bottom: 40px;
+  }
+  to{
+   bottom: 20px;
+  }
+}
+
+.tab-back{
+  background-color: darkorchid;
+}
+
+.Personal_Details_inner_{
+      /* background: #263853; */
+      /* background-image: url(http://localhost:3000/static/media/busd-stake.0071633….png); */
+      border-radius: 5px;
+      color: #fff;
+      margin: 10px 0;
+      text-align: center;
+      padding: 30px 10px;
+      position: relative;
+      min-height: 147.55px;
+      /* border: 1px solid rgba(255, 255, 255, 0.63); */
+      border: 1px solid rgb(255 255 255 / 18%);
+      box-shadow: rgb(34 28 71 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
+}
+
 
 .user-wallet-card {
   border: 1px solid #ffffff9c;
