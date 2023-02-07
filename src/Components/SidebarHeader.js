@@ -10,7 +10,7 @@ import {
   getStakingDetails,
   isLastInvestmentActive,
   isRewardClaimPending,
-  getManagerIncome
+  getManagerIncome,
 } from "../helper/getWeb3";
 import {
   setUserAddress,
@@ -23,13 +23,15 @@ import {
   setIsLastInvestmentActive,
   setIsRewardClaimPending,
   setBusinessPercent,
-  setRoyalityIncome
+  setRoyalityIncome,
 } from "../redux/reducer";
 
 export const SidebarHeader = ({ canWithdraw }) => {
-  const { isLastInvestmentActive_, isRewardClaimPending_ } = useSelector((state) => state.data.value);
+  const { isLastInvestmentActive_, isRewardClaimPending_ } = useSelector(
+    (state) => state.data.value
+  );
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     startNow().then((res) => {
@@ -52,29 +54,45 @@ export const SidebarHeader = ({ canWithdraw }) => {
               userLastTimeAmountTotalRewardClaimed:
                 sd?.userLastTimeAmountTotalRewardClaimed,
             };
-            getManagerIncome(res?.userAddress).then((managerIncome)=>{
-              dispatch(setRoyalityIncome({royalityIncome: managerIncome}))
-            
-            dispatch(setStakingDetails({ stakingDetails: obj }));
-            dispatch(setDailyRoi({ dailyRoi: roi }));
-            console.log(((managerIncome?.topDepositor)),"1");
-            console.log(((managerIncome?.seniorManagerIncome)/1e18),"2");
-            console.log(((managerIncome?.managerIncome)/1e18),"3");
-            dispatch(setTotalAvaialbeWithdraw({ totalAvailableWithdraw: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + (roi / 1e18) +((managerIncome?.topDepositor)/1e18) + ((managerIncome?.seniorManagerIncome)/1e18) + ((managerIncome?.managerIncome)/1e18)}));
-            dispatch(setBusinessPercent({ businessPercent: uDetails?.amountEarnedByRef / 1e18 + uDetails?.totalIncentiveEarned / 1e18 + roi / 1e18 + sd?.userLastTimeAmountTotalRewardClaimed/1e18 +
-            ((managerIncome?.topDepositor)/1e18) + ((managerIncome?.seniorManagerIncome)/1e18) + ((managerIncome?.managerIncome)/1e18)}))
-            setDailyRoi(roi);
-          });
-        })
+            getManagerIncome(res?.userAddress).then((managerIncome) => {
+              dispatch(setRoyalityIncome({ royalityIncome: managerIncome }));
 
+              dispatch(setStakingDetails({ stakingDetails: obj }));
+              dispatch(setDailyRoi({ dailyRoi: roi }));
+              dispatch(
+                setTotalAvaialbeWithdraw({
+                  totalAvailableWithdraw:
+                    uDetails?.amountEarnedByRef / 1e18 +
+                    uDetails?.totalIncentiveEarned / 1e18 +
+                    roi / 1e18 +
+                    managerIncome?.topDepositor / 1e18 +
+                    managerIncome?.seniorManagerIncome / 1e18 +
+                    managerIncome?.managerIncome / 1e18,
+                })
+              );
+              dispatch(
+                setBusinessPercent({
+                  businessPercent:
+                    uDetails?.amountEarnedByRef / 1e18 +
+                    uDetails?.totalIncentiveEarned / 1e18 +
+                    roi / 1e18 +
+                    sd?.userLastTimeAmountTotalRewardClaimed / 1e18 +
+                    managerIncome?.topDepositor / 1e18 +
+                    managerIncome?.seniorManagerIncome / 1e18 +
+                    managerIncome?.managerIncome / 1e18,
+                })
+              );
+              setDailyRoi(roi);
+            });
+          });
         });
       });
       isLastInvestmentActive(res?.userAddress).then((isp) => {
-        dispatch(setIsLastInvestmentActive({ isLastInvestmentActive_: isp }))
-      })
+        dispatch(setIsLastInvestmentActive({ isLastInvestmentActive_: isp }));
+      });
       isRewardClaimPending(res?.userAddress).then((cp) => {
-        dispatch(setIsRewardClaimPending({ isRewardClaimPending_: cp }))
-      })
+        dispatch(setIsRewardClaimPending({ isRewardClaimPending_: cp }));
+      });
     });
   }, []);
 
@@ -127,21 +145,25 @@ export const SidebarHeader = ({ canWithdraw }) => {
             <Link to="/DailyTopDepositorIncome">Daily Top Depositor</Link>
           </li>
           <li>
-            <Link to="/MyTeam">Manager Income</Link>
+            <Link to="/ManagerIncome">Manager Income</Link>
           </li>
           <li>
-            <Link to="/MyTeam">Senior Manager Income</Link>
+            <Link to="/SeniorManagerIncome">Senior Manager Income</Link>
           </li>
-          
-      
+
           <li className="menu-button">
-            <a href="" onClick={() => {
-              if (isRewardClaimPending_) {
-                toast("Withdraw Balance Reward First")
-              } else {
-                navigate("/Deposit");
-              }
-            }}>Deposit</a>
+            <a
+              href=""
+              onClick={() => {
+                if (isRewardClaimPending_) {
+                  toast("Withdraw Balance Reward First");
+                } else {
+                  navigate("/Deposit");
+                }
+              }}
+            >
+              Deposit
+            </a>
           </li>
           <li className="menu-button">
             <Link to="/widthdraw">Widthdraw</Link>

@@ -11,10 +11,12 @@ import { Deposit } from "./Pages/Deposit";
 import { Widthdraw } from "./Pages/Widthdraw";
 import { DepositDetails } from "./Pages/DepositDetails";
 import { WithdrawDetails } from "./Pages/withdrawDetails";
-import {AirdropDetails} from './Pages/AirdropDetails'
+import { AirdropDetails } from "./Pages/AirdropDetails";
 import { MyReferrals } from "./Pages/MyReferrals";
 import { MyTeam } from "./Pages/MyTeam";
-import {DailyTopDepositor} from './Pages/DailyTopDepositor'
+import { DailyTopDepositor } from "./Pages/DailyTopDepositor";
+import { ManagerIncome } from "./Pages/ManagerIncome";
+import { SeniorManagerIncome } from "./Pages/SeniorManagerIncome";
 
 function App() {
   const { userAddress } = useSelector((state) => state.data.value);
@@ -35,7 +37,15 @@ function App() {
           <Route path="/AirdropDetails" element={<AirdropDetails />} />
           <Route path="/MyReferrals" element={<MyReferrals />} />
           <Route path="/MyTeam" element={<MyTeam />} />
-          <Route path="/DailyTopDepositorIncome" element={<DailyTopDepositor />} />
+          <Route
+            path="/DailyTopDepositorIncome"
+            element={<DailyTopDepositor />}
+          />
+          <Route path="/ManagerIncome" element={<ManagerIncome />} />
+          <Route
+            path="/SeniorManagerIncome"
+            element={<SeniorManagerIncome />}
+          />
         </Routes>
         <Toaster
           position="top-center mt-5"

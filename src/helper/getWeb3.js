@@ -168,13 +168,14 @@ export const deployedTime = async () => {
 };
 export const getManagerIncome = async (userAddress) => {
   try {
-    const data = await contract_instance.methods.UserRoyalityDetail(userAddress).call();
-    console.log( data?.dailyTopFiveIncome,"data?.dailyTopFiveIncome");
+    const data = await contract_instance.methods
+      .UserRoyalityDetail(userAddress)
+      .call();
     const obj = {
       topDepositor: data?.dailyTopFiveIncome,
       seniorManagerIncome: data?.userSeniorManagerIncome,
-      managerIncome: data?.usermanagerIncome
-    }
+      managerIncome: data?.usermanagerIncome,
+    };
     return obj;
   } catch (error) {
     console.log(error, "UserRoyalityDetail Error");
@@ -189,23 +190,27 @@ export const getStakingDetails = async (userAddress) => {
   } catch (error) {
     console.log(error, "UserStakingDetail Error");
   }
-};  
-export const isLastInvestmentActive = async(userAddress)=>{
+};
+export const isLastInvestmentActive = async (userAddress) => {
   try {
-    const data = await contract_instance.methods.isLastInvestmentActive(userAddress).call()
-    return data
+    const data = await contract_instance.methods
+      .isLastInvestmentActive(userAddress)
+      .call();
+    return data;
   } catch (error) {
-    console.log(error,"isLastInvestmentActive Error");
+    console.log(error, "isLastInvestmentActive Error");
   }
-}
-export const isRewardClaimPending = async(userAddress)=>{
+};
+export const isRewardClaimPending = async (userAddress) => {
   try {
-    const data = await contract_instance.methods.IsRewardClaimPending(userAddress).call()
-    return data
+    const data = await contract_instance.methods
+      .IsRewardClaimPending(userAddress)
+      .call();
+    return data;
   } catch (error) {
-    console.log(error,"IsRewardClaimPending Error");
+    console.log(error, "IsRewardClaimPending Error");
   }
-}
+};
 export async function buy(userAddress, amount, ref, setRefresh) {
   console.table([
     [userAddress, "userAddress"],
@@ -309,4 +314,3 @@ export async function buy(userAddress, amount, ref, setRefresh) {
     console.log(error);
   }
 }
-
