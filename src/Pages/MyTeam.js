@@ -6,8 +6,10 @@ import { useSelector } from "react-redux";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import { ColorRing } from "react-loader-spinner";
+import { roundTo } from "round-to";
 export const MyTeam = () => {
   const { userAddress } = useSelector((state) => state.data.value);
+  
   const [tab, setTab] = useState([]);
   const [teamTab, setTeamTab] = useState({});
   const [data, setData] = useState(true);
@@ -31,8 +33,9 @@ export const MyTeam = () => {
 
   useEffect(() => {
     getMyTeam(userAddress?.userAddress).then((res) => {
-      setTeamTab(res);
-      setTab(res?.level_1);
+      console.log(res?.data,"table data");
+      setTeamTab(res?.data);
+      setTab(res?.data?.level_1);
       setData(false);
     });
   }, [userAddress?.userAddress]);
@@ -100,7 +103,8 @@ export const MyTeam = () => {
                 <tr>
                   {/* <th scope="col">Sr No.</th> */}
                   <th scope="col">Sr. No.</th>
-                  <th scope="col">Amount</th>
+                  <th scope="col">Invested</th>
+                  <th scope="col">Income</th>
                   <th scope="col">User ID</th>
                   <th scope="col">User Address</th>
                   <th scope="col">Date</th>
@@ -132,8 +136,9 @@ export const MyTeam = () => {
                       return (
                         <>
                           <tr key={i} className="tab-back">
-                            <td>{i + 1}</td>
+                            <td className="text-center" style={{marginLeft: "5px"}}>{i + 1}</td>
                             <td>{e?.AmtInv / 1e18} BUSD</td>
+                            <td>{ e?.amount ? roundTo((e?.amount / 1e18),4) : 0} BUSD</td>
                             <td>{e?.userRefferdById}</td>
                             <td>
                               <a

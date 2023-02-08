@@ -467,6 +467,10 @@ img.vert-move {
   .Dropdown-root{
     width: 36%;
   }
+
+  .siginin-section{
+    margin-top: 55px;
+  }
   
   .rs-table{
     width: 500px;

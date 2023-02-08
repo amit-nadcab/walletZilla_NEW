@@ -99,3 +99,12 @@ export const getSeniorManagerIncome = async (userAddress) => {
     console.log(error);
   }
 };
+export const getTodaysTopDepositor = async () => {
+  try {
+    const data = await axios.get(`${BASE_URL}/getTodaysTopDepositor`);
+    return data.data;
+  } catch (error) {
+    console.log(error, "getTodaysTopDepositor Error");
+  }
+};
+

@@ -19,7 +19,7 @@ import ReactSpeedometer from "react-d3-speedometer";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { roundTo } from "round-to";
 import { toast } from "react-hot-toast";
-import { getTotalTeamBusiness, getManagerIncome } from "../helper/apiFunctions";
+import { getTotalTeamBusiness, getManagerIncome, getTodaysTopDepositor } from "../helper/apiFunctions";
 
 export const Dashboard = () => {
   const {
@@ -45,13 +45,14 @@ export const Dashboard = () => {
   const [canWithdraw, setCanWithdraw] = useState(false);
   const [teamBusiness, setTeamBusiness] = useState(0);
   const [tab, setTab] = useState([]);
+
+
   useEffect(() => {
-    getManagerIncome("0xBfc52D9dB62b90B5216096CeCB849b4D416DfA0B").then(
-      (res) => {
-        setTab(res?.data);
-      }
-    );
-  }, [userAddress?.userAddress]);
+    getTodaysTopDepositor().then((res)=>{
+      setTab(res?.data)
+      console.log(res?.data,"new Data");
+    })
+  }, []);
 
   const [d, setD] = useState(0);
 
@@ -146,13 +147,13 @@ export const Dashboard = () => {
         // countDown((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000))
         countDown(
           Number(stakingDetails?.timeOfLastAmountstakede) * 1000 +
-            21 * 60 * 1000
+            7 * 24 * 60 * 60 * 1000
         );
       } else if (isUserExist && stakingDetails?.timeofLastWithdrwal != 0) {
         // console.log((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000),"Last Deposit");
         // countDown((Number(stakingDetails?.timeofLastWithdrwal)*1000) +(7*24*60*60*1000))
         countDown(
-          Number(stakingDetails?.timeofLastWithdrwal) * 1000 + 21 * 60 * 1000
+          Number(stakingDetails?.timeofLastWithdrwal) * 1000 + 7 * 24 * 60 * 60 * 1000
         );
       }
     } else {
@@ -841,7 +842,7 @@ export const Dashboard = () => {
         <div className="container">
           <div className=" text-center">
             <h2>
-              <span className="busd-stake-gradiant">Top Depositors</span>
+              <span className="busd-stake-gradiant">Current Top Depositors</span>
             </h2>
           </div>
           <div className="row cus_row">
@@ -854,8 +855,8 @@ export const Dashboard = () => {
                         {/* <th scope="col">Sr No.</th> */}
                         <th scope="col">Sr. No.</th>
                         <th scope="col">User ID</th>
-                        <th scope="col">Income</th>
-                        <th scope="col">Transaction ID</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">User Address</th>
                         <th scope="col">Date </th>
                       </tr>
                     </thead>
@@ -869,16 +870,16 @@ export const Dashboard = () => {
                           return (
                             <>
                               <tr key={i}>
-                                {/* <th scope="row">1</th> */}
                                 <td>{i + 1}</td>
-                                <td>{e?.amount / 1e18} BUSD</td>
+                                <td>{e?.uiserId}</td>
+                                <td>{e?.AmountInv ? roundTo((e?.AmountInv / 1e18),4) : 0} BUSD</td>
                                 <td>
                                   {" "}
-                                  {e?.transaction_id.substr(0, 10) +
+                                  {e?.userAddress.substr(0, 10) +
                                     "......." +
-                                    e?.transaction_id.substr(55)}
+                                    e?.userAddress.substr(35)}
                                 </td>
-                                <td>{test.toLocaleDateString()}</td>
+                                <td>{test?.toLocaleString('en-US', {hour12: true })}</td>
                               </tr>
                             </>
                           );

@@ -33,7 +33,7 @@ export const SidebarHeader = ({ canWithdraw }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(canWithdraw, "canWithdraw");
+  // console.log(canWithdraw, "canWithdraw");
 
   useEffect(() => {
     startNow().then((res) => {

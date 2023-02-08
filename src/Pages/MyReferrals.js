@@ -4,6 +4,7 @@ import { SidebarHeader } from "../Components/SidebarHeader";
 import { getMyReferral } from "../helper/apiFunctions";
 import { useSelector } from "react-redux";
 import { ColorRing } from "react-loader-spinner";
+import { roundTo } from "round-to";
 
 export const MyReferrals = () => {
   const { userAddress } = useSelector((state) => state.data.value);
@@ -36,7 +37,8 @@ export const MyReferrals = () => {
                 <tr>
                   {/* <th scope="col">Sr No.</th> */}
                   <th scope="col">Sr. No.</th>
-                  <th scope="col">Amount Invested</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Income</th>
                   <th scope="col">User ID</th>
                   <th scope="col">User Address</th>
                   <th scope="col">Date </th>
@@ -62,8 +64,8 @@ export const MyReferrals = () => {
                 </div>
               ) : (
                 <tbody>
-                  {tab && tab.length > 0 ? (
-                    tab.map((e, i) => {
+                  {tab && tab?.length > 0 ? (
+                    tab?.map((e, i) => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
 
                       return (
@@ -72,7 +74,8 @@ export const MyReferrals = () => {
                             {/* <th scope="row">1</th> */}
                             <td>{i + 1}</td>
                             <td>{e?.AmountInv / 1e18} BUSD</td>
-                            <td>{e?.userRefferdById}</td>
+                            <td>{e?.amount != null ? roundTo((e?.amount / 1e18),4) : 0} BUSD</td>
+                            <td>{e?.uiserId}</td>
                             <td>
                               <a
                                 style={{ color: "white" }}
