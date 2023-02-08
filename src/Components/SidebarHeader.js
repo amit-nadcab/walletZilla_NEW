@@ -33,6 +33,8 @@ export const SidebarHeader = ({ canWithdraw }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(canWithdraw, "canWithdraw");
+
   useEffect(() => {
     startNow().then((res) => {
       dispatch(setUserAddress({ userAddress: res }));
@@ -166,7 +168,13 @@ export const SidebarHeader = ({ canWithdraw }) => {
             </a>
           </li>
           <li className="menu-button">
-            <Link to="/widthdraw">Widthdraw</Link>
+            {canWithdraw ? (
+              <Link to="/widthdraw">Widthdraw</Link>
+            ) : (
+              <Link onClick={() => toast("Wait for next withdrwaw cycle")}>
+                Withdraw
+              </Link>
+            )}
           </li>
         </ul>
       </div>

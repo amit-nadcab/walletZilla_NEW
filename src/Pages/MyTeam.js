@@ -3,68 +3,78 @@ import { sidebarJS } from "../helper/helperFunctions";
 import { SidebarHeader } from "../Components/SidebarHeader";
 import { getMyTeam } from "../helper/apiFunctions";
 import { useSelector } from "react-redux";
-import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+import { ColorRing } from "react-loader-spinner";
 export const MyTeam = () => {
-
   const { userAddress } = useSelector((state) => state.data.value);
-  const [tab, setTab] = useState([])
-  const [teamTab, setTeamTab] = useState({})
+  const [tab, setTab] = useState([]);
+  const [teamTab, setTeamTab] = useState({});
+  const [data, setData] = useState(true);
 
   const options = [
-    'Level 1', 'Level 2', 'Level 3','Level 4','Level 5','Level 6','Level 7','Level 8','Level 9','Level 10'
+    "Level 1",
+    "Level 2",
+    "Level 3",
+    "Level 4",
+    "Level 5",
+    "Level 6",
+    "Level 7",
+    "Level 8",
+    "Level 9",
+    "Level 10",
   ];
   const defaultOption = options[0];
   useEffect(() => {
-    sidebarJS();  
+    sidebarJS();
   }, []);
 
   useEffect(() => {
-    getMyTeam(userAddress?.userAddress).then((res)=>{
-      setTeamTab(res)
-      setTab(res?.level_1)
-    })
-  }, [userAddress?.userAddress])
+    getMyTeam(userAddress?.userAddress).then((res) => {
+      setTeamTab(res);
+      setTab(res?.level_1);
+      setData(false);
+    });
+  }, [userAddress?.userAddress]);
 
-  const setTeamLevel = (i)=>{
-
-    if(i?.value === 'Level 1'){
-      setTab(teamTab?.level_1)
+  const setTeamLevel = (i) => {
+    if (i?.value === "Level 1") {
+      setTab(teamTab?.level_1);
     }
-    if(i?.value === 'Level 2'){
-      setTab(teamTab?.level_2)
+    if (i?.value === "Level 2") {
+      setTab(teamTab?.level_2);
     }
-    if(i?.value === 'Level 3'){
-      setTab(teamTab?.level_3)
+    if (i?.value === "Level 3") {
+      setTab(teamTab?.level_3);
     }
-    if(i?.value === 'Level 4'){
-      setTab(teamTab?.level_4)
+    if (i?.value === "Level 4") {
+      setTab(teamTab?.level_4);
     }
-    if(i?.value === 'Level 2'){
-      setTab(teamTab?.level_2)
+    if (i?.value === "Level 2") {
+      setTab(teamTab?.level_2);
     }
-    if(i?.value === 'Level 5'){
-      setTab(teamTab?.level_5)
+    if (i?.value === "Level 5") {
+      setTab(teamTab?.level_5);
     }
-    if(i?.value === 'Level 6'){
-      setTab(teamTab?.level_6)
+    if (i?.value === "Level 6") {
+      setTab(teamTab?.level_6);
     }
-    if(i?.value === 'Level 2'){
-      setTab(teamTab?.level_2)
+    if (i?.value === "Level 2") {
+      setTab(teamTab?.level_2);
     }
-    if(i?.value === 'Level 7'){
-      setTab(teamTab?.level_7)
+    if (i?.value === "Level 7") {
+      setTab(teamTab?.level_7);
     }
-    if(i?.value === 'Level 8'){
-      setTab(teamTab?.level_8)
+    if (i?.value === "Level 8") {
+      setTab(teamTab?.level_8);
     }
-    if(i?.value === 'Level 9'){
-      setTab(teamTab?.level_9)
+    if (i?.value === "Level 9") {
+      setTab(teamTab?.level_9);
     }
-    if(i?.value === 'Level 10'){
-      setTab(teamTab?.level_10)
+    if (i?.value === "Level 10") {
+      setTab(teamTab?.level_10);
     }
-  }
+  };
   return (
     <>
       <SidebarHeader />
@@ -76,7 +86,13 @@ export const MyTeam = () => {
             </h2>
           </div>
           <div className="">
-            <Dropdown options={options} value={defaultOption} placeholder="Select an option" onChange={(i)=> setTeamLevel(i)}/>;
+            <Dropdown
+              options={options}
+              value={defaultOption}
+              placeholder="Select an option"
+              onChange={(i) => setTeamLevel(i)}
+            />
+            ;
           </div>
           <div className="table-responsive">
             <table className="table mt-3 rs-table">
@@ -90,9 +106,27 @@ export const MyTeam = () => {
                   <th scope="col">Date</th>
                 </tr>
               </thead>
-              <tbody>
-                {
-                  tab?.length > 0 ? (
+              {data ? (
+                <div className="text-center">
+                  <ColorRing
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="blocks-wrapper"
+                    colors={[
+                      "#e15b64",
+                      "#f47e60",
+                      "#f8b26a",
+                      "#abbd81",
+                      "#849b87",
+                    ]}
+                  />
+                </div>
+              ) : (
+                <tbody>
+                  {tab?.length > 0 ? (
                     tab?.map((e, i) => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
                       return (
@@ -102,17 +136,25 @@ export const MyTeam = () => {
                             <td>{e?.AmtInv / 1e18} BUSD</td>
                             <td>{e?.userRefferdById}</td>
                             <td>
-                              <a style={{ color: "white" }} href={`https://testnet.bscscan.com/address/${e?.userAddress}`} target="_blank" rel="noreferrer">{e?.userAddress
-                                }</a>
+                              <a
+                                style={{ color: "white" }}
+                                href={`https://testnet.bscscan.com/address/${e?.userAddress}`}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {e?.userAddress}
+                              </a>
                             </td>
                             <td>{test.toLocaleDateString()}</td>
                           </tr>
                         </>
-                      )
+                      );
                     })
-                  ) : <div className="text-white text-center">No Data Found</div>
-                }
-              </tbody>
+                  ) : (
+                    <div className="text-white text-center">No Data Found</div>
+                  )}
+                </tbody>
+              )}
             </table>
           </div>
         </div>
