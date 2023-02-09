@@ -53,7 +53,9 @@ export const Deposit = () => {
     )
   }, [refresh])
 
-
+useEffect(()=>{
+  console.log(window.ethereum,"aa mask");
+},[])
   // console.log(stakeAmount, "stakeAmount", typeof stakeAmount);
   function connectWallet() {
     startNow().then((res) => {

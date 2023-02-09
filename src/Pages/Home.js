@@ -28,7 +28,6 @@ export const Home = () => {
 
   useEffect(() => {
     connectWallet();
-    console.log(window.ethereum,"meeta")
   }, []);
   return (
     <>

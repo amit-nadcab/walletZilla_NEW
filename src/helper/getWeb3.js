@@ -38,9 +38,11 @@ export async function startNow() {
       } catch (error) {
         if (error.code === 4001) {
         }
-        console.log(error);
+        
         reject(error);
       }
+    }else{
+      toast("Open in Dapp Browser or Install Any Crypto Wallet")
     }
   });
 }

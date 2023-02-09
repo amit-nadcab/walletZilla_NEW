@@ -20,6 +20,7 @@ export const Header = () => {
               alt=""
             />
           </a>
+
           <button
             className="navbar-toggler"
             type="button"
@@ -48,7 +49,20 @@ export const Header = () => {
                     Dashboard
                   </Link>
                 ) : ( */}
-                <span
+
+                {
+                  userAddress?.userAddress ? 
+                  <span
+                  className="nav-link active text-white text-center"
+                  aria-current="page"
+                  onClick={() => {
+                        navigate("/Dashboard");
+                      
+                  }}
+                >
+                  Dashboard
+                </span> : 
+                  <span
                   className="nav-link active text-white text-center"
                   aria-current="page"
                   onClick={() => {
@@ -61,7 +75,22 @@ export const Header = () => {
                   }}
                 >
                   Connect Wallet
-                </span>
+                </span> 
+                }
+                {/* <span
+                  className="nav-link active text-white text-center"
+                  aria-current="page"
+                  onClick={() => {
+                    startNow().then((res) => {
+                      dispatch(setUserAddress({ userAddress: res }));
+                      if (res?.userAddress) {
+                        navigate("/Dashboard");
+                      }
+                    });
+                  }}
+                >
+                  Connect Wallet
+                </span> */}
                 {/* )} */}
               </li>
               <li className="nav-item header-buttons">
