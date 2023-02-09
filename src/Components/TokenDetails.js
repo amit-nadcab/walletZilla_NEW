@@ -1,4 +1,5 @@
 import React from "react";
+import { TOKEN_ADDRESS } from "../helper/config";
 
 export const TokenDetails = () => {
   return (
@@ -20,14 +21,11 @@ export const TokenDetails = () => {
           <div className="row">
             <div
               className="col-lg-6 col-md-6 col-sm-12"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+             
             >
               <div className="dreamit-section-title pb-5" data-wow-delay=".5s">
                 <h4>WZT Tokenomics</h4>
+                <div className="table-responsive">
                 <table className="table">
                   <tbody>
                     <tr>
@@ -48,10 +46,12 @@ export const TokenDetails = () => {
                     </tr>
                     <tr>
                       <td>Token Address</td>
-                      <td>0x000000000000000000</td>
+                      <td>{"0x92c94A2658f685b6d20F7b53e613cedE78b4CEB7"}</td>
                     </tr>
                   </tbody>
                 </table>
+                </div>
+                
                 {/* <p className="section-text">
                                     This whole platform is designed to work in the
                                     finance environment with any governing parties, and

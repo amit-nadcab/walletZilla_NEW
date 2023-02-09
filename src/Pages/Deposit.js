@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import { Link, useLocation, useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { sidebarJS } from "../helper/helperFunctions";
@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast";
 import { roundTo } from "round-to";
 
 export const Deposit = () => {
-  const { userAddress, userBalance} = useSelector((state) => state.data.value);
+  const { userAddress, userBalance } = useSelector((state) => state.data.value);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export const Deposit = () => {
     if (location?.search.slice(11)) {
       setShowLink(false)
     }
-    if(refresh)(
+    if (refresh) (
       navigate('/Dashboard')
     )
   }, []);
@@ -47,11 +47,11 @@ export const Deposit = () => {
   }, [userAddress])
 
 
-  useEffect(()=>{
-    if(refresh)(
+  useEffect(() => {
+    if (refresh) (
       navigate('/Dashboard')
     )
-  },[refresh])
+  }, [refresh])
 
 
   // console.log(stakeAmount, "stakeAmount", typeof stakeAmount);
@@ -69,15 +69,15 @@ export const Deposit = () => {
 
   return (
     <>
-      <SidebarHeader/>
-      
+      <SidebarHeader />
+
       <section className="siginin-section">
         <div className="signin-middle-container">
-          
+
           <div className="container">
-         
+
             <div className="outer-form-signin col-md-12 ">
-              
+
               <div className="row">
                 <div className="inner-form-signin col-md-12">
                   <div>
@@ -88,7 +88,7 @@ export const Deposit = () => {
                         className="signin-logo"
                       />
                     </Link>
-                   
+
                     {/* <h1 className="text-center fw-bolder text-primary">
                       Sign Up
                     </h1> */}
@@ -96,15 +96,34 @@ export const Deposit = () => {
                       Buy Price: 1 Matic ~ 1407 MFI
                     </p> */}
 
+
+
                     <div className="mb-3 ps-4 pe-4">
+
+                      <div className="row pt-2 pb-3">
+
+                        <div className="col-6 text-white text-start">
+
+                          <span className="text-white " style={{ fontSize: '12px' }}> Wallet Balance : <span style={{ color: "#00f700" }} className="fw-bold mob-align"> {userBalance ? roundTo((userBalance / 1e18), 4) : 0}</span></span>
+
+
+                        </div>
+                        <div className="col-6 pb-0 text-end">
+                          <p class="mb-0" style={{ fontSize: '12px', color: "#ffff" }}>Wallet Address: <span style={{ color: "#00f700" }} className="fw-bold mob-align">{userAddress && userAddress.userAddress.substr(0, 7) +
+                            "......." +
+                            userAddress.userAddress.substr(34)}</span> </p>
+
+                        </div>
+                      </div>
                       {haveSponsorId || ref ? (
                         <>
-                          <p className="mt-3 mb-2 text-start ps-2  text-white">
+                        <div className="form-group">
+                          <label className="">
                             Sponsor Id
-                          </p>
+                          </label>
                           <input
                             type="text"
-                            className="form-control"
+                            className="form-control px-2"
                             placeholder="Enter Sponsor Id"
                             name="sponserId"
                             required
@@ -134,22 +153,34 @@ export const Deposit = () => {
                             id="ider"
                             style={{ display: "none" }}
                           ></div>
+                          </div>
                         </>
                       ) : null}
-                      <div className="d-flex justify-content-between pt-2">
-                      <div><p className=" text-white">
-                        Enter BUSD Amount*
-                      </p></div>
-                        <div className="pb-0">
-                        <p style={{fontSize: '14px', color: "#ffff"}}>Wallet Address: <span style={{color: "#00f700"}} className="fw-bold">{ userAddress && userAddress.userAddress.substr(0, 7) +
-                    "......." +
-                    userAddress.userAddress.substr(34)}</span> </p>
-                     
-                        </div>
+
+
+                      <div class="form-group mb-2">
+                        <label class="">Enter BUSD Amount*</label>
+                        <input
+                          type="text"
+                          className="form-control px-2"
+                          placeholder="Enter BUSD Amount"
+                          value={stakeAmount}
+                          autoComplete="off"
+                          onChange={(e) => {
+
+                            setStaleAmount(Number(
+                              e.target.value
+                                ?.replace(/[^0-9.]/, "")
+                                .replace(/(\..?)\../g, "$1"))
+                            );
+
+
+                          }}
+                        />
+                        <small className="form-text text-info" style={{ fontSize: '12px' }}> Minimum deposit 50 BUSD to max 10000 BUSD</small>
+
                       </div>
-                      
-                      
-                    
+
                       {!userExist ? (showLink ?
                         <p className="text-end text-white">
                           Have a Sponsor ID?{" "}
@@ -166,51 +197,32 @@ export const Deposit = () => {
                         </p> : null
                       ) : ("")}
 
-                      <input
-                        type="text"
-                        className="form-control pt-2"
-                        placeholder="Enter BUSD Amount"
-                        value={stakeAmount}
-                        autoComplete="off"
-                        onChange={(e) => {
-                          setStaleAmount(Number(
-                            e.target.value
-                              ?.replace(/[^0-9.]/, "")
-                              .replace(/(\..?)\../g, "$1"))
-                          );
-                        }}
-                      />
-                      <div className="d-flex justify-content-between">
-                        <div>  <span className=" text-white " style={{fontSize: '12px'}}> Minimum deposit 50 BUSD to max 10000 BUSD</span></div>
-                        <div><span className="text-white " style={{fontSize: '12px'}}> Wallet Balance : <span style={{color: "#00f700"}} className="fw-bold"> {userBalance ? roundTo((userBalance/1e18),4) : 0}</span></span></div>
-                    
-                       
+
+
+                      <div className="d-flex flex-direction-row justify-content-between mx-auto mt-3 width80">
+                        <div className="text-white deposit-calculator btn btn-sm"> you invest <br />{stakeAmount}</div>
+                        <div className="text-white deposit-calculator btn btn-sm d-flex align-items-center justify-content-center"> 1.4 % daily</div>
+                        <div className="text-white deposit-calculator btn btn-sm">you get <br />{stakeAmount * 300 / 100}</div>
                       </div>
-                       
-                       <div className="d-flex flex-direction-row justify-content-between mx-auto" style={{width: "80%"}}>
-                       <div className="text-white deposit-calculator"> you invest <br/>{stakeAmount}</div>
-                       <div className="text-white deposit-calculator d-flex align-items-center justify-content-center"> 1.4 % daily</div>
-                       <div className="text-white deposit-calculator">you get <br/>{stakeAmount*300/100}</div>
-                       </div>
-                  
+
                       <button
                         type="button"
-                        className="btn btn-primary join-here-btn connect-wallet-btn mt-5"
+                        className="btn btn-primary join-here-btn connect-wallet-btn mt-3"
                         onClick={() => {
                           if (userExist) {
                             if (stakeAmount >= 50 && stakeAmount <= 10000) {
-                              console.log(referredBy,"referredBy - 1");
-                              buy(userAddress?.userAddress, stakeAmount, referredBy,setRefresh);
+                              console.log(referredBy, "referredBy - 1");
+                              buy(userAddress?.userAddress, stakeAmount, referredBy, setRefresh);
                             } else {
                               toast.error("BUSD Amount should be min 50 max 10000")
                             }
-                          } else if(!userExist) {
-                            if(ref ? ref : sponsorId){
+                          } else if (!userExist) {
+                            if (ref ? ref : sponsorId) {
                               isUserExist(ref ? ref : sponsorId).then((res) => {
                                 if (res) {
                                   if (stakeAmount >= 50 && stakeAmount <= 10000) {
-                                    console.log(ref,"referredBy", sponsorId," - 2");
-                                    buy(userAddress?.userAddress, stakeAmount, ref ? ref : sponsorId,setRefresh);
+                                    console.log(ref, "referredBy", sponsorId, " - 2");
+                                    buy(userAddress?.userAddress, stakeAmount, ref ? ref : sponsorId, setRefresh);
                                   } else {
                                     toast.error("BUSD Amount should be min 50 max 10000")
                                   }
@@ -218,14 +230,14 @@ export const Deposit = () => {
                                   toast.error("Enter Valid Sponsor ID")
                                 }
                               })
-                            }else{
+                            } else {
                               if (stakeAmount >= 50 && stakeAmount <= 10000) {
-                                buy(userAddress?.userAddress, stakeAmount,3999,setRefresh);
+                                buy(userAddress?.userAddress, stakeAmount, 3999, setRefresh);
                               } else {
                                 toast.error("BUSD Amount should be min 50 max 10000")
                               }
                             }
-                            
+
                           }
                         }}
                       >

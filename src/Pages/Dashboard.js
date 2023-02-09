@@ -217,7 +217,7 @@ export const Dashboard = () => {
                   </p>
                   <p>
                     <span className="dashboard-header-list-li-heading">
-                      Referral Link :
+                     <b>Referral Link :</b> 
                     </span>
                   </p>
                 </div>
@@ -248,10 +248,10 @@ export const Dashboard = () => {
                   {isUserExist ? (
                     <p>
                       <span className="ref-link">
-                        {`http://localhost:3000/Deposit?sponsorid=${userDetails?.userId}`}
+                        {`https://walletzilla.io/Deposit?sponsorid==${userDetails?.userId}`}
                       </span>{" "}
                       <CopyToClipboard
-                        text={`http://localhost:3000/Deposit?sponsorid=${userDetails?.userId}`}
+                        text={`https://walletzilla.io/Deposit?sponsorid==${userDetails?.userId}`}
                         onCopy={() => setCopied(true)}
                       >
                         <AiOutlineCopy color="pink" />
@@ -348,16 +348,17 @@ export const Dashboard = () => {
                 </div>
                 <p className="card-value-size">
                   <span className="dashboard-header-list-li-heading">
-                    <u>Referal Link :</u>
+                  <b style={{backgroundColor: "darkorchid", padding: "10px", borderRadius:"10px"}}>Referal Link :</b> 
+                   
                   </span>
                 </p>
                 {isUserExist ? (
                   <p>
                     <span className="ref-link">
-                      {`http://localhost:3000/Deposit?sponsorid=${userDetails?.userId}`}
+                      {`https://walletzilla.io/Deposit?sponsorid=${userDetails?.userId}`}
                     </span>{" "}
                     <CopyToClipboard
-                      text={`http://localhost:3000/Deposit?sponsorid=${userDetails?.userId}`}
+                      text={`https://walletzilla.io/Deposit?sponsorid=${userDetails?.userId}`}
                       onCopy={() => setCopied(true)}
                     >
                       <AiOutlineCopy color="pink" />
@@ -536,7 +537,7 @@ export const Dashboard = () => {
                 <h4>Total Profit</h4>
                 <p>
                   <b>
-                    <span className="amount-number">{0}</span>
+                    <span className="amount-number">{businessPercent ? roundTo(businessPercent,2) : 0}</span>
                   </b>{" "}
                   BUSD
                 </p>
@@ -571,7 +572,7 @@ export const Dashboard = () => {
             </div>
             <div className="col-md-4 col-sm-6 col-6">
               <div className="Personal_Details_inner">
-                <h4> Total Direct Referral income</h4>
+                <h4>Direct Referral income</h4>
                 <p>
                   {" "}
                   <span className="amount-number">
@@ -588,7 +589,7 @@ export const Dashboard = () => {
             </div>
             <div className="col-md-4 col-sm-6 col-6">
               <div className="Personal_Details_inner">
-                <h4>Total Level Income</h4>
+                <h4>Level Income</h4>
                 <p>
                   <span className="amount-number">
                     {" "}
@@ -604,7 +605,7 @@ export const Dashboard = () => {
             </div>
             <div className="col-md-4 col-sm-6 col-6">
               <div className="Personal_Details_inner">
-                <h4>Total Daily Divident</h4>
+                <h4> Daily Divident</h4>
                 <p>
                   <span className="amount-number">
                     {" "}

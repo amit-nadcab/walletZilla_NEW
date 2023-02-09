@@ -464,6 +464,38 @@ img.vert-move {
 
 @media screen and (max-width: 480px) {
 
+/*   
+.custom_table table {
+  table-layout: fixed!important;
+}
+.custom_table table tbody td {
+  padding: unset!important;
+  white-space: nowrap;
+}
+
+.custom_table table thead th {
+  padding: unset!important;
+  white-space: nowrap;
+}
+
+.custom_table table tbody tr td:nth-child(5),
+.custom_table table thead tr th:nth-child(5){
+  width: 60%!important;
+
+} */
+
+  .mob-align {
+    display: block!important;
+  }
+
+  .deposit-calculator {
+    font-size: 10px!important;
+  }
+
+  .width80 {
+    width: 100%!important;
+  }
+
   .Dropdown-root{
     width: 36%;
   }
@@ -724,4 +756,8 @@ img.vert-move {
 
 .sidebarshow {
   right: 0;
+}
+
+.width80 {
+  width: 80%;
 }

@@ -20,6 +20,8 @@ export const MyReferrals = () => {
       setTab(res?.data);
       setData(false);
     });
+
+    
   }, [userAddress?.userAddress]);
   return (
     <>
@@ -31,17 +33,17 @@ export const MyReferrals = () => {
               <span className="busd-stake-gradiant">My Referrals</span>
             </h2>
           </div>
-          <div className="table-responsive">
-            <table className="table mt-3 rs-table">
+          <div className="table-responsive custom_table">
+            <table className="table mt-3 rs-table--">
               <thead className="thead-light">
                 <tr>
                   {/* <th scope="col">Sr No.</th> */}
-                  <th scope="col">Sr. No.</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Income</th>
-                  <th scope="col">User ID</th>
-                  <th scope="col">User Address</th>
-                  <th scope="col">Date </th>
+                  <th>Sr. No.</th>
+                  <th>Amount</th>
+                  <th>Income</th>
+                  <th>User ID</th>
+                  <th>User Address</th>
+                  <th>Date </th>
                 </tr>
               </thead>
               {data ? (
@@ -71,7 +73,7 @@ export const MyReferrals = () => {
                       return (
                         <>
                           <tr key={i} className="tab-back">
-                            {/* <th scope="row">1</th> */}
+                           
                             <td>{i + 1}</td>
                             <td>{e?.AmountInv / 1e18} BUSD</td>
                             <td>{e?.amount != null ? roundTo((e?.amount / 1e18),4) : 0} BUSD</td>
@@ -94,6 +96,16 @@ export const MyReferrals = () => {
                   ) : (
                     <div className="text-white text-center">No Data Found</div>
                   )}
+
+                  {/* <tr>
+                    <td>1</td>
+                    <td>1002 BUSD</td>
+                    <td>100 BUSD</td>
+                    <td>4002</td>
+                    <td>0x3b6b4E9FCF68CEbBb41465E1c35767613728B7eb</td>
+
+                    <td></td>
+                  </tr> */}
                 </tbody>
               )}
             </table>

@@ -128,6 +128,29 @@ export const SidebarHeader = ({ canWithdraw }) => {
           <li>
             <Link to="/Dashboard">Dashboard</Link>
           </li>
+          <li className="menu-button">
+            <a
+              href=""
+              onClick={() => {
+                if (isRewardClaimPending_) {
+                  toast("Withdraw Balance Reward First");
+                } else {
+                  navigate("/Deposit");
+                }
+              }}
+            >
+              Deposit
+            </a>
+          </li>
+          <li className="menu-button">
+            {canWithdraw ? (
+              <Link to="/widthdraw">Widthdraw</Link>
+            ) : (
+              <Link onClick={() => toast("Wait for next withdrwaw cycle")}>
+                Withdraw
+              </Link>
+            )}
+          </li>
           <li>
             <Link to="/DepositDetails">Deposit Details</Link>
           </li>
@@ -151,30 +174,6 @@ export const SidebarHeader = ({ canWithdraw }) => {
           </li>
           <li>
             <Link to="/SeniorManagerIncome">Senior Manager Income</Link>
-          </li>
-
-          <li className="menu-button">
-            <a
-              href=""
-              onClick={() => {
-                if (isRewardClaimPending_) {
-                  toast("Withdraw Balance Reward First");
-                } else {
-                  navigate("/Deposit");
-                }
-              }}
-            >
-              Deposit
-            </a>
-          </li>
-          <li className="menu-button">
-            {canWithdraw ? (
-              <Link to="/widthdraw">Widthdraw</Link>
-            ) : (
-              <Link onClick={() => toast("Wait for next withdrwaw cycle")}>
-                Withdraw
-              </Link>
-            )}
           </li>
         </ul>
       </div>

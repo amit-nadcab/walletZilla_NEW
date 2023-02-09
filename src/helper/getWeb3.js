@@ -267,9 +267,9 @@ export async function buy(userAddress, amount, ref, setRefresh) {
               if (allowance >= amount) {
                 try {
                   console.log("5");
-                  console.log((amount * 1e18).toString(), "amount*1e18 2");
+                  console.log((amount * 1e18).toLocaleString("fullwide",{useGrouping: false}), "amount*1e18 2");
                   const data = contract_instance.methods
-                    .InvestBusd((amount * 1e18).toString(), ref)
+                    .InvestBusd((amount * 1e18).toLocaleString("fullwide",{useGrouping: false}), ref)
                     .send({ from: userAddress, value: 0 });
                   toast.promise(data, {
                     loading: "Transaction Pending...",
@@ -285,11 +285,11 @@ export async function buy(userAddress, amount, ref, setRefresh) {
                 }
               } else if (allowance < amount) {
                 console.log("6");
-                console.log((amount * 1e18).toString(), "amount*1e18 3");
+                console.log((amount * 1e18).toLocaleString("fullwide",{useGrouping: false}), "amount*1e18 3");
                 try {
-                  console.log((amount * 1e18).toString(), "amount*1e18 4");
+                  console.log((amount * 1e18).toLocaleString("fullwide",{useGrouping: false}), "amount*1e18 4");
                   const approveData = token_instance.methods
-                    .approve(CONTRACT_ADDRESS, (amount * 1e18).toString())
+                    .approve(CONTRACT_ADDRESS, (amount * 1e18).toLocaleString("fullwide",{useGrouping: false}))
                     .send({
                       from: userAddress,
                       value: 0,
@@ -303,9 +303,9 @@ export async function buy(userAddress, amount, ref, setRefresh) {
                     })
                     .then(() => {
                       console.log("7");
-                      console.log((amount * 1e18).toString(), "amount*1e18 1");
+                      console.log((amount * 1e18).toLocaleString("fullwide",{useGrouping: false}), "amount*1e18 1");
                       const data = contract_instance.methods
-                        .InvestBusd((amount * 1e18).toString(), ref)
+                        .InvestBusd((amount * 1e18).toLocaleString("fullwide",{useGrouping: false}), ref)
                         .send({
                           from: userAddress,
                           value: 0,
