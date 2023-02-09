@@ -39,7 +39,7 @@ export const DepositDetails = () => {
                   <th scope="col">Sr. No.</th>
                   <th scope="col">Amount</th>
                   <th scope="col">Txn Hash</th>
-                  {/* <th scope="col">Status</th> */}
+                  <th scope="col">Status</th>
                   <th scope="col">Deposit Date </th>
                 </tr>
               </thead>
@@ -86,7 +86,7 @@ export const DepositDetails = () => {
                                   : 0}
                               </a>
                             </td>
-                            {/* <td>{'Active'}</td> */}
+                            <td>{i == 0 ? "active" : "expired"}</td>
                             <td>{test.toLocaleDateString()}</td>
                           </tr>
                         </>

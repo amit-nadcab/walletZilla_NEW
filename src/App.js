@@ -28,6 +28,7 @@ function App() {
         <a
           href="https://t.me/wallet_zilla"
           target="_blank"
+          rel="noreferrer"
           style={{
             position: "fixed",
             bottom: "30px",
@@ -54,8 +55,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
-          {/* <Route path="/Auth" element={<Auth />} /> */}
-          {/* <Route path="/Signup" element={<Signup />} /> */}
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Deposit" element={<Deposit />} />
           <Route path="/DepositDetails" element={<DepositDetails />} />
@@ -64,15 +63,9 @@ function App() {
           <Route path="/AirdropDetails" element={<AirdropDetails />} />
           <Route path="/MyReferrals" element={<MyReferrals />} />
           <Route path="/MyTeam" element={<MyTeam />} />
-          <Route
-            path="/DailyTopDepositorIncome"
-            element={<DailyTopDepositor />}
-          />
+          <Route path="/DailyTopDepositorIncome" element={<DailyTopDepositor />}/>
           <Route path="/ManagerIncome" element={<ManagerIncome />} />
-          <Route
-            path="/SeniorManagerIncome"
-            element={<SeniorManagerIncome />}
-          />
+          <Route path="/SeniorManagerIncome" element={<SeniorManagerIncome />}/>
         </Routes>
         <Toaster
           position="top-center mt-5"
@@ -83,12 +76,6 @@ function App() {
               color: "#713200",
             },
           }}
-          // toastOptions={{
-          //   style: {
-          //     background: '#363636',
-          //     color: '#fff',
-          //   },
-          // }}
         />
       </BrowserRouter>
     </>

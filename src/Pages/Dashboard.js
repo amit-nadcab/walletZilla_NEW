@@ -19,7 +19,7 @@ import ReactSpeedometer from "react-d3-speedometer";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { roundTo } from "round-to";
 import { toast } from "react-hot-toast";
-import { getTotalTeamBusiness, getManagerIncome, getTodaysTopDepositor } from "../helper/apiFunctions";
+import { getTotalTeamBusiness, getTodaysTopDepositor } from "../helper/apiFunctions";
 
 export const Dashboard = () => {
   const {
