@@ -50,7 +50,7 @@ export const Dashboard = () => {
   useEffect(() => {
     getTodaysTopDepositor().then((res)=>{
       setTab(res?.data)
-      console.log(res?.data,"new Data");
+      // console.log(res?.data,"new Data");
     })
   }, []);
 

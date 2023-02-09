@@ -15,6 +15,7 @@ export const Widthdraw = () => {
     dailyRoi,
     totalAvailableWithdraw,
     royalityIncome,
+    
   } = useSelector((state) => state.data.value);
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(false);
@@ -40,13 +41,13 @@ export const Widthdraw = () => {
               <div className="row">
                 <div className="inner-form-signin col-md-12">
                   <div>
-                    <Link to="/">
+                    <span >
                       <img
                         src="assets/images/walletZilla_logo.png"
                         alt=""
                         className="signin-logo"
                       />
-                    </Link>
+                    </span>
                     <div className="withdraw-heading-wrapper pt-1 mb-3 mt-3">
                       <h3 className="text-center text-white pb-2">Withdraw</h3>
                     </div>

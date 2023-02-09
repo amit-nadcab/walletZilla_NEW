@@ -8,9 +8,10 @@ import { setUserAddress } from "../redux/reducer";
 import { SidebarHeader } from "../Components/SidebarHeader";
 import { UserAddress } from "../Components/UserAddress";
 import { toast } from "react-hot-toast";
+import { roundTo } from "round-to";
 
 export const Deposit = () => {
-  const { userAddress} = useSelector((state) => state.data.value);
+  const { userAddress, userBalance} = useSelector((state) => state.data.value);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export const Deposit = () => {
   },[refresh])
 
 
-  console.log(stakeAmount, "stakeAmount", typeof stakeAmount);
+  // console.log(stakeAmount, "stakeAmount", typeof stakeAmount);
   function connectWallet() {
     startNow().then((res) => {
       console.log(res, "address");
@@ -140,9 +141,10 @@ export const Deposit = () => {
                         Enter BUSD Amount*
                       </p></div>
                         <div className="pb-0">
-                        <p style={{fontSize: '14px', color: "#ffff"}}>Wallet Address: { userAddress && userAddress.userAddress.substr(0, 7) +
+                        <p style={{fontSize: '14px', color: "#ffff"}}>Wallet Address: <span style={{color: "#00f700"}} className="fw-bold">{ userAddress && userAddress.userAddress.substr(0, 7) +
                     "......." +
-                    userAddress.userAddress.substr(34)}</p>
+                    userAddress.userAddress.substr(34)}</span> </p>
+                     
                         </div>
                       </div>
                       
@@ -178,7 +180,13 @@ export const Deposit = () => {
                           );
                         }}
                       />
-                       <p className="text-start text-white " style={{fontSize: '12px'}}> Minimum deposit 50 BUSD to max 10000 BUSD</p>
+                      <div className="d-flex justify-content-between">
+                        <div>  <span className=" text-white " style={{fontSize: '12px'}}> Minimum deposit 50 BUSD to max 10000 BUSD</span></div>
+                        <div><span className="text-white " style={{fontSize: '12px'}}> Wallet Balance : <span style={{color: "#00f700"}} className="fw-bold"> {userBalance ? roundTo((userBalance/1e18),4) : 0}</span></span></div>
+                    
+                       
+                      </div>
+                       
                        <div className="d-flex flex-direction-row justify-content-between mx-auto" style={{width: "80%"}}>
                        <div className="text-white deposit-calculator"> you invest <br/>{stakeAmount}</div>
                        <div className="text-white deposit-calculator d-flex align-items-center justify-content-center"> 1.4 % daily</div>
