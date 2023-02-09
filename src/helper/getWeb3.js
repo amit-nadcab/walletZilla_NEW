@@ -16,8 +16,8 @@ const token_instance = new web3.eth.Contract(TOKEN_ABI, TOKEN_ADDRESS);
 export async function startNow() {
   web3.eth.getChainId().then((res) => {
     // console.log(res, "chain ID", typeof res);
-    if (res !== 97) {
-      SwitchNetwork();
+    if (res !== 56) {
+      SwitchMainnetNetwork();
     }
   });
 
@@ -61,6 +61,35 @@ export async function SwitchNetwork() {
               },
               rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545"],
               blockExplorerUrls: ["https://testnet.bscscan.com"],
+            },
+          ],
+        });
+        window.ethereum.on("networkChanged", function (networkId) {
+          window.location.reload();
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  });
+}
+export async function SwitchMainnetNetwork() {
+  return new Promise((resolve, reject) => {
+    if (window.ethereum) {
+      try {
+        window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x38",
+              chainName: "Binance Smart Chain Mainnet",
+              nativeCurrency: {
+                name: "Binance",
+                symbol: "BNB",
+                decimals: 18,
+              },
+              rpcUrls: ["https://bsc-dataseed.binance.org"],
+              blockExplorerUrls: ["https://bscscan.com"],
             },
           ],
         });

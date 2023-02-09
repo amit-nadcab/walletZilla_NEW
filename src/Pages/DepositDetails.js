@@ -11,7 +11,7 @@ export const DepositDetails = () => {
   const [data, setData] = useState(true);
 
   useEffect(() => {
-    sidebarJS();
+    sidebarJS(); 
   }, []);
 
   useEffect(() => {

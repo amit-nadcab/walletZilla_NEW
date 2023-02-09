@@ -98,6 +98,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     deployedTime().then((dt) => {
+      console.log(dt,"aaaa");
       let interval = setInterval(function () {
         let currentTime = new Date();
         // console.log(Number(dt) * 1000,"Time");
