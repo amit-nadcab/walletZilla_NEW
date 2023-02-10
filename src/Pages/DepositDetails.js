@@ -66,7 +66,6 @@ export const DepositDetails = () => {
                   {tab && tab.length > 0 ? (
                     tab.map((e, i) => {
                       const test = new Date(Number(e.block_timestamp) * 1000);
-
                       return (
                         <>
                           <tr key={i} className="tab-back">
@@ -75,7 +74,7 @@ export const DepositDetails = () => {
                             <td>
                               <a
                                 style={{ color: "white" }}
-                                href={`https://testnet.bscscan.com/tx/${e?.transaction_id}`}
+                                href={`https://bscscan.com/tx/${e?.transaction_id}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >

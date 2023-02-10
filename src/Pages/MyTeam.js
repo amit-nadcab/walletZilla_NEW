@@ -97,7 +97,7 @@ export const MyTeam = () => {
             />
             ;
           </div>
-          <div className="table-responsive">
+          <div className="overflow-auto">
             <table className="table mt-3 rs-table">
               <thead className="thead-light">
                 <tr>
@@ -139,15 +139,15 @@ export const MyTeam = () => {
                             <td className="text-center" style={{marginLeft: "5px"}}>{i + 1}</td>
                             <td>{e?.AmtInv / 1e18} BUSD</td>
                             <td>{ e?.amount ? roundTo((e?.amount / 1e18),4) : 0} BUSD</td>
-                            <td>{e?.userRefferdById}</td>
+                            <td>{e?.uiserId}</td>
                             <td>
                               <a
                                 style={{ color: "white" }}
-                                href={`https://testnet.bscscan.com/address/${e?.userAddress}`}
+                                href={`https://bscscan.com/address/${e?.userAddress}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >
-                                {e?.userAddress}
+                                {e?.userAddress ? e?.userAddress.substr(1,11)+"...."+e?.userAddress.substr(35) : 0}
                               </a>
                             </td>
                             <td>{test.toLocaleDateString()}</td>

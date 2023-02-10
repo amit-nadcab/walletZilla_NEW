@@ -71,7 +71,7 @@ export const WithdrawDetails = () => {
                             <td>
                               <a
                                 style={{ color: "white" }}
-                                href={`https://testnet.bscscan.com/tx/${e?.transaction_id}`}
+                                href={`https://bscscan.com/tx/${e?.transaction_id}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >

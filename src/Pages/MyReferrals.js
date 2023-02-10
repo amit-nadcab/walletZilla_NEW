@@ -33,16 +33,15 @@ export const MyReferrals = () => {
               <span className="busd-stake-gradiant">My Referrals</span>
             </h2>
           </div>
-          <div className="table-responsive custom_table">
-            <table className="table mt-3 rs-table--">
+          <div className="overflow-auto">
+            <table className="table mt-3 rs-table">
               <thead className="thead-light">
                 <tr>
-                  {/* <th scope="col">Sr No.</th> */}
                   <th>Sr. No.</th>
                   <th>Amount</th>
                   <th>Income</th>
-                  <th>User ID</th>
-                  <th>User Address</th>
+                  <th>ID</th>
+                  <th>Address</th>
                   <th>Date </th>
                 </tr>
               </thead>
@@ -81,11 +80,11 @@ export const MyReferrals = () => {
                             <td>
                               <a
                                 style={{ color: "white" }}
-                                href={`https://testnet.bscscan.com/address/${e?.userAddress}`}
+                                href={`https://bscscan.com/address/${e?.userAddress}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >
-                                {e?.userAddress}
+                                {e?.userAddress ? e?.userAddress.substr(1,11)+"....."+e?.userAddress.substr(35) : 0}
                               </a>
                             </td>
                             <td>{test.toLocaleDateString()}</td>
@@ -96,16 +95,6 @@ export const MyReferrals = () => {
                   ) : (
                     <div className="text-white text-center">No Data Found</div>
                   )}
-
-                  {/* <tr>
-                    <td>1</td>
-                    <td>1002 BUSD</td>
-                    <td>100 BUSD</td>
-                    <td>4002</td>
-                    <td>0x3b6b4E9FCF68CEbBb41465E1c35767613728B7eb</td>
-
-                    <td></td>
-                  </tr> */}
                 </tbody>
               )}
             </table>

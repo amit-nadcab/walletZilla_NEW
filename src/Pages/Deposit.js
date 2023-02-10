@@ -6,7 +6,6 @@ import { sidebarJS } from "../helper/helperFunctions";
 import { buy, startNow, isUserExist, getUserDetails } from "../helper/getWeb3";
 import { setUserAddress } from "../redux/reducer";
 import { SidebarHeader } from "../Components/SidebarHeader";
-import { UserAddress } from "../Components/UserAddress";
 import { toast } from "react-hot-toast";
 import { roundTo } from "round-to";
 
@@ -101,6 +100,19 @@ useEffect(()=>{
 
 
                     <div className="mb-3 ps-4 pe-4">
+                    {
+                      userAddress?.userAddress ?  
+                      <div>
+                      <button className="deposit-connect-btn mt-2 mb-2">Connected</button>
+                      </div> : 
+
+                    <div>
+                    <button className="deposit-connect-btn mt-2" onClick={()=>{
+                      connectWallet()
+                    }}>Connect Wallet</button>
+                  </div>
+                    }
+                     
 
                       <div className="row pt-2 pb-3">
 
@@ -111,9 +123,9 @@ useEffect(()=>{
 
                         </div>
                         <div className="col-6 pb-0 text-end">
-                          <p class="mb-0" style={{ fontSize: '12px', color: "#ffff" }}>Wallet Address: <span style={{ color: "#00f700" }} className="fw-bold mob-align">{userAddress && userAddress.userAddress.substr(0, 7) +
+                          <p class="mb-0" style={{ fontSize: '12px', color: "#ffff" }}>Wallet Address: <span style={{ color: "#00f700" }} className="fw-bold mob-align">{  userAddress?.userAddress ? userAddress.userAddress.substr(0, 7) +
                             "......." +
-                            userAddress.userAddress.substr(34)}</span> </p>
+                            userAddress.userAddress.substr(34) : 0}</span> </p>
 
                         </div>
                       </div>
