@@ -19,7 +19,10 @@ import ReactSpeedometer from "react-d3-speedometer";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { roundTo } from "round-to";
 import { toast } from "react-hot-toast";
-import { getTotalTeamBusiness, getTodaysTopDepositor } from "../helper/apiFunctions";
+import {
+  getTotalTeamBusiness,
+  getTodaysTopDepositor,
+} from "../helper/apiFunctions";
 
 export const Dashboard = () => {
   const {
@@ -46,12 +49,11 @@ export const Dashboard = () => {
   const [teamBusiness, setTeamBusiness] = useState(0);
   const [tab, setTab] = useState([]);
 
-
   useEffect(() => {
-    getTodaysTopDepositor().then((res)=>{
-      setTab(res?.data)
+    getTodaysTopDepositor().then((res) => {
+      setTab(res?.data);
       // console.log(res?.data,"new Data");
-    })
+    });
   }, []);
 
   const [d, setD] = useState(0);
@@ -98,7 +100,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     deployedTime().then((dt) => {
-      console.log(dt,"aaaa");
+      console.log(dt, "aaaa");
       let interval = setInterval(function () {
         let currentTime = new Date();
         // console.log(Number(dt) * 1000,"Time");
@@ -154,7 +156,8 @@ export const Dashboard = () => {
         // console.log((Number(stakingDetails?.timeOfLastAmountstakede)*1000) +(7*24*60*60*1000),"Last Deposit");
         // countDown((Number(stakingDetails?.timeofLastWithdrwal)*1000) +(7*24*60*60*1000))
         countDown(
-          Number(stakingDetails?.timeofLastWithdrwal) * 1000 + 7 * 24 * 60 * 60 * 1000
+          Number(stakingDetails?.timeofLastWithdrwal) * 1000 +
+            7 * 24 * 60 * 60 * 1000
         );
       }
     } else {
@@ -217,7 +220,7 @@ export const Dashboard = () => {
                   </p>
                   <p>
                     <span className="dashboard-header-list-li-heading">
-                     <b>Referral Link :</b> 
+                      <b>Referral Link :</b>
                     </span>
                   </p>
                 </div>
@@ -248,10 +251,10 @@ export const Dashboard = () => {
                   {isUserExist ? (
                     <p>
                       <span className="ref-link">
-                        {`https://walletzilla.io/Deposit?sponsorid==${userDetails?.userId}`}
+                        {`https://walletzilla.io/Deposit?sponsorid=${userDetails?.userId}`}
                       </span>{" "}
                       <CopyToClipboard
-                        text={`https://walletzilla.io/Deposit?sponsorid==${userDetails?.userId}`}
+                        text={`https://walletzilla.io/Deposit?sponsorid=${userDetails?.userId}`}
                         onCopy={() => setCopied(true)}
                       >
                         <AiOutlineCopy color="pink" />
@@ -348,8 +351,15 @@ export const Dashboard = () => {
                 </div>
                 <p className="card-value-size">
                   <span className="dashboard-header-list-li-heading">
-                  <b style={{backgroundColor: "darkorchid", padding: "10px", borderRadius:"10px"}}>Referal Link :</b> 
-                   
+                    <b
+                      style={{
+                        backgroundColor: "darkorchid",
+                        padding: "10px",
+                        borderRadius: "10px",
+                      }}
+                    >
+                      Referal Link :
+                    </b>
                   </span>
                 </p>
                 {isUserExist ? (
@@ -537,7 +547,9 @@ export const Dashboard = () => {
                 <h4>Total Profit</h4>
                 <p>
                   <b>
-                    <span className="amount-number">{businessPercent ? roundTo(businessPercent,2) : 0}</span>
+                    <span className="amount-number">
+                      {businessPercent ? roundTo(businessPercent, 2) : 0}
+                    </span>
                   </b>{" "}
                   BUSD
                 </p>
@@ -844,7 +856,9 @@ export const Dashboard = () => {
         <div className="container">
           <div className=" text-center">
             <h2>
-              <span className="busd-stake-gradiant">Current Top Depositors</span>
+              <span className="busd-stake-gradiant">
+                Current Top Depositors
+              </span>
             </h2>
           </div>
           <div className="row cus_row">
@@ -856,7 +870,7 @@ export const Dashboard = () => {
                       <tr>
                         {/* <th scope="col">Sr No.</th> */}
                         <th scope="col">Sr. No.</th>
-                        <th scope="col">User ID</th>
+                        {/* <th scope="col">User ID</th> */}
                         <th scope="col">Amount</th>
                         <th scope="col">User Address</th>
                         <th scope="col">Date </th>
@@ -873,15 +887,24 @@ export const Dashboard = () => {
                             <>
                               <tr key={i}>
                                 <td>{i + 1}</td>
-                                <td>{e?.uiserId}</td>
-                                <td>{e?.AmountInv ? roundTo((e?.AmountInv / 1e18),4) : 0} BUSD</td>
+                                {/* <td>{e?.uiserId}</td> */}
+                                <td>
+                                  {e?.AmountInv
+                                    ? roundTo(e?.AmountInv / 1e18, 4)
+                                    : 0}{" "}
+                                  BUSD
+                                </td>
                                 <td>
                                   {" "}
                                   {e?.userAddress.substr(0, 10) +
                                     "......." +
                                     e?.userAddress.substr(35)}
                                 </td>
-                                <td>{test?.toLocaleString('en-US', {hour12: true })}</td>
+                                <td>
+                                  {test?.toLocaleString("en-US", {
+                                    hour12: true,
+                                  })}
+                                </td>
                               </tr>
                             </>
                           );
